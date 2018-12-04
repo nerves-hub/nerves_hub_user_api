@@ -39,7 +39,8 @@ defmodule NervesHubCore.MixProject do
       {:tesla, "~> 1.2.1 or ~> 1.3"},
       {:hackney, "~> 1.9"},
       {:x509, "~> 0.3"},
-      {:ex_doc, "~> 0.19", only: [:dev, :test], runtime: false}
+      {:ex_doc, "~> 0.19", only: [:dev, :test], runtime: false},
+      {:dialyxir, "1.0.0-rc.4", only: [:dev, :test], runtime: false}
     ]
   end
 end
