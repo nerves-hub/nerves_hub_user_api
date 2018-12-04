@@ -5,7 +5,7 @@ defmodule NervesHubCore.Device do
   Path: /orgs/:org_name/devices
   """
 
-  alias NervesHubCore.{Auth, Org}
+  alias NervesHubCore.{Auth, API, Org}
 
   @path "devices"
 
@@ -19,7 +19,7 @@ defmodule NervesHubCore.Device do
           {:error, any()} | {:ok, any()}
   def create(org_name, identifier, description, tags, %Auth{} = auth) do
     params = %{identifier: identifier, description: description, tags: tags}
-    NervesHubCore.request(:post, path(org_name), params, auth)
+    API.request(:post, path(org_name), params, auth)
   end
 
   @doc """
@@ -32,7 +32,7 @@ defmodule NervesHubCore.Device do
           {:error, any()} | {:ok, any()}
   def update(org_name, device_identifier, params, %Auth{} = auth) do
     params = Map.merge(params, %{identifier: device_identifier})
-    NervesHubCore.request(:put, path(org_name, device_identifier), params, auth)
+    API.request(:put, path(org_name, device_identifier), params, auth)
   end
 
   @doc """
@@ -46,7 +46,7 @@ defmodule NervesHubCore.Device do
   def auth(org_name, cert_pem, %Auth{} = auth) do
     params = %{certificate: Base.encode64(cert_pem)}
     path = Path.join(path(org_name), "auth")
-    NervesHubCore.request(:post, path, params, auth)
+    API.request(:post, path, params, auth)
   end
 
   @doc """
@@ -58,7 +58,7 @@ defmodule NervesHubCore.Device do
   @spec cert_list(atom() | binary(), binary(), NervesHubCore.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def cert_list(org_name, device_identifier, %Auth{} = auth) do
-    NervesHubCore.request(:get, cert_path(org_name, device_identifier), "", auth)
+    API.request(:get, cert_path(org_name, device_identifier), "", auth)
   end
 
   @doc """
@@ -72,7 +72,7 @@ defmodule NervesHubCore.Device do
   def cert_sign(org_name, device_identifier, csr, %Auth{} = auth) do
     params = %{identifier: device_identifier, csr: csr}
     path = Path.join(cert_path(org_name, device_identifier), "sign")
-    NervesHubCore.request(:post, path, params, auth)
+    API.request(:post, path, params, auth)
   end
 
   @doc false
