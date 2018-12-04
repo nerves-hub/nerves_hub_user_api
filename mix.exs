@@ -10,7 +10,8 @@ defmodule NervesHubCore.MixProject do
       deps: deps(),
       docs: [main: "readme", extras: ["README.md"]],
       description: description(),
-      package: package()
+      package: package(),
+      dialyzer: [ignore_warnings: "dialyzer.ignore-warnings"]
     ]
   end
 
