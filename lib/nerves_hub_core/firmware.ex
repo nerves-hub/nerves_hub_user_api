@@ -5,7 +5,7 @@ defmodule NervesHubCore.Firmware do
   Path: /orgs/:org_name/products/:product_name/firmwares
   """
 
-  alias NervesHubCore.{Auth, Product}
+  alias NervesHubCore.{Auth, API, Product}
 
   @path "firmwares"
 
@@ -18,7 +18,7 @@ defmodule NervesHubCore.Firmware do
   @spec list(atom() | binary(), atom() | binary(), NervesHubCore.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def list(org_name, product_name, %Auth{} = auth) do
-    NervesHubCore.request(:get, path(org_name, product_name), "", auth)
+    API.request(:get, path(org_name, product_name), "", auth)
   end
 
   @doc """
@@ -36,7 +36,7 @@ defmodule NervesHubCore.Firmware do
         ) :: {:error, any()} | {:ok, any()}
   def create(org_name, product_name, tar, ttl, %Auth{} = auth) do
     params = %{ttl: ttl}
-    NervesHubCore.file_request(:post, path(org_name, product_name), tar, params, %Auth{} = auth)
+    API.file_request(:post, path(org_name, product_name), tar, params, %Auth{} = auth)
   end
 
   @doc """
@@ -53,7 +53,7 @@ defmodule NervesHubCore.Firmware do
         ) :: {:error, any()} | {:ok, any()}
   def delete(org_name, product_name, uuid, %Auth{} = auth) do
     path = Path.join(path(org_name, product_name), uuid)
-    NervesHubCore.request(:delete, path, "", auth)
+    API.request(:delete, path, "", auth)
   end
 
   @doc false

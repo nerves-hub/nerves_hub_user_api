@@ -5,7 +5,7 @@ defmodule NervesHubCore.Key do
   Path: /orgs/:org_name/keys
   """
 
-  alias NervesHubCore.{Auth, Org}
+  alias NervesHubCore.{Auth, API, Org}
 
   @path "keys"
 
@@ -17,7 +17,7 @@ defmodule NervesHubCore.Key do
   """
   @spec list(atom() | binary(), NervesHubCore.Auth.t()) :: {:error, any()} | {:ok, any()}
   def list(org_name, %Auth{} = auth) do
-    NervesHubCore.request(:get, path(org_name), "", auth)
+    API.request(:get, path(org_name), "", auth)
   end
 
   @doc """
@@ -30,7 +30,7 @@ defmodule NervesHubCore.Key do
           {:error, any()} | {:ok, any()}
   def create(org_name, key_name, key, %Auth{} = auth) do
     params = %{name: key_name, key: key}
-    NervesHubCore.request(:post, path(org_name), params, auth)
+    API.request(:post, path(org_name), params, auth)
   end
 
   @doc """
@@ -42,7 +42,7 @@ defmodule NervesHubCore.Key do
   @spec delete(atom() | binary(), binary(), NervesHubCore.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def delete(org_name, key_name, %Auth{} = auth) do
-    NervesHubCore.request(:delete, path(org_name, key_name), "", auth)
+    API.request(:delete, path(org_name, key_name), "", auth)
   end
 
   @doc false

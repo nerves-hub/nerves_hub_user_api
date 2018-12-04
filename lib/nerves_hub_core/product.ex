@@ -5,7 +5,7 @@ defmodule NervesHubCore.Product do
   Path: /orgs/:org_name/products
   """
 
-  alias NervesHubCore.{Auth, Org}
+  alias NervesHubCore.{Auth, API, Org}
 
   @path "products"
 
@@ -17,7 +17,7 @@ defmodule NervesHubCore.Product do
   """
   @spec list(atom() | binary(), NervesHubCore.Auth.t()) :: {:error, any()} | {:ok, any()}
   def list(org_name, %Auth{} = auth) do
-    NervesHubCore.request(:get, path(org_name), "", auth)
+    API.request(:get, path(org_name), "", auth)
   end
 
   @doc """
@@ -29,7 +29,7 @@ defmodule NervesHubCore.Product do
   @spec create(atom() | binary(), any(), NervesHubCore.Auth.t()) :: {:error, any()} | {:ok, any()}
   def create(org_name, product_name, %Auth{} = auth) do
     params = %{name: product_name}
-    NervesHubCore.request(:post, path(org_name), params, auth)
+    API.request(:post, path(org_name), params, auth)
   end
 
   @doc """
@@ -41,7 +41,7 @@ defmodule NervesHubCore.Product do
   @spec delete(atom() | binary(), atom() | binary(), NervesHubCore.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def delete(org_name, product_name, %Auth{} = auth) do
-    NervesHubCore.request(:delete, path(org_name, product_name), "", auth)
+    API.request(:delete, path(org_name, product_name), "", auth)
   end
 
   @doc """
@@ -54,7 +54,7 @@ defmodule NervesHubCore.Product do
           {:error, any()} | {:ok, any()}
   def update(org_name, product_name, params, %Auth{} = auth) do
     params = %{product: params}
-    NervesHubCore.request(:put, path(org_name, product_name), params, auth)
+    API.request(:put, path(org_name, product_name), params, auth)
   end
 
   @doc false

@@ -5,7 +5,7 @@ defmodule NervesHubCore.User do
   Path: /users
   """
 
-  alias NervesHubCore.Auth
+  alias NervesHubCore.{Auth, API}
 
   # Certificate protected
   @doc """
@@ -16,7 +16,7 @@ defmodule NervesHubCore.User do
   """
   @spec me(NervesHubCore.Auth.t()) :: {:error, any()} | {:ok, any()}
   def me(%Auth{} = auth) do
-    NervesHubCore.request(:get, "users/me", "", auth)
+    API.request(:get, "users/me", "", auth)
   end
 
   # Username / Password protected endpoints
@@ -29,7 +29,7 @@ defmodule NervesHubCore.User do
   @spec register(binary(), binary(), binary()) :: {:error, any()} | {:ok, any()}
   def register(username, email, password) do
     params = %{username: username, email: email, password: password}
-    NervesHubCore.request(:post, "users/register", params)
+    API.request(:post, "users/register", params)
   end
 
   @doc """
@@ -41,7 +41,7 @@ defmodule NervesHubCore.User do
   @spec auth(binary(), binary()) :: {:error, any()} | {:ok, any()}
   def auth(email, password) do
     params = %{email: email, password: password}
-    NervesHubCore.request(:post, "users/auth", params)
+    API.request(:post, "users/auth", params)
   end
 
   @doc """
@@ -53,6 +53,6 @@ defmodule NervesHubCore.User do
   @spec sign(binary(), binary(), binary(), binary()) :: {:error, any()} | {:ok, any()}
   def sign(email, password, csr, description) do
     params = %{email: email, password: password, csr: csr, description: description}
-    NervesHubCore.request(:post, "users/sign", params)
+    API.request(:post, "users/sign", params)
   end
 end
