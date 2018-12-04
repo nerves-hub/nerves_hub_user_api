@@ -91,7 +91,6 @@ defmodule NervesHubCore.API do
     ]
   end
 
-  @spec ssl_options(NervesHubCore.Config.t() | %{}) :: Keyword.t()
   defp ssl_options(%{key: key, cert: cert}) do
     [
       key: {:ECPrivateKey, X509.PrivateKey.to_der(key)},
