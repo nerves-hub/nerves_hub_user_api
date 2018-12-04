@@ -6,4 +6,12 @@ defmodule NervesHubCore.Auth do
           cert: X509.Certificate.t(),
           key: X509.PrivateKey.t()
         }
+
+  @spec new(keyword() | map()) :: NervesHubCore.Auth.t()
+  def new(opts) do
+    %__MODULE__{
+      cert: opts[:cert],
+      key: opts[:key]
+    }
+  end
 end

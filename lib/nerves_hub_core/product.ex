@@ -1,33 +1,74 @@
 defmodule NervesHubCore.Product do
+  @moduledoc """
+  Manage products on NervesHub
+
+  Path: /orgs/:org_name/products
+  """
+
   alias NervesHubCore.{Auth, Org}
 
   @path "products"
 
-  def path(org) do
-    Path.join([Org.path(org), @path])
+  @doc """
+  List all products for an org.
+
+  Verb: GET
+  Path: /orgs/:org_name/products
+  """
+  @spec list(atom() | binary(), NervesHubCore.Auth.t()) :: {:error, any()} | {:ok, any()}
+  def list(org_name, %Auth{} = auth) do
+    NervesHubCore.request(:get, path(org_name), "", auth)
   end
 
-  def path(org, product) when is_atom(product), do: path(org, to_string(product))
+  @doc """
+  Create a new product.
 
-  def path(org, product) do
-    Path.join([path(org), product])
+  Verb: POST
+  Path: /orgs/:org_name/products
+  """
+  @spec create(atom() | binary(), any(), NervesHubCore.Auth.t()) :: {:error, any()} | {:ok, any()}
+  def create(org_name, product_name, %Auth{} = auth) do
+    params = %{name: product_name}
+    NervesHubCore.request(:post, path(org_name), params, auth)
   end
 
-  def list(org, %Auth{} = auth) do
-    NervesHubCore.request(:get, path(org), "", auth)
+  @doc """
+  Delete an existing product.
+
+  Verb: DELETE
+  Path: /orgs/:org_name/products/:product_name
+  """
+  @spec delete(atom() | binary(), atom() | binary(), NervesHubCore.Auth.t()) ::
+          {:error, any()} | {:ok, any()}
+  def delete(org_name, product_name, %Auth{} = auth) do
+    NervesHubCore.request(:delete, path(org_name, product_name), "", auth)
   end
 
-  def create(org, product, %Auth{} = auth) do
-    params = %{name: product}
-    NervesHubCore.request(:post, path(org), params, auth)
-  end
+  @doc """
+  Update parameters of an existing product.
 
-  def delete(org, product, %Auth{} = auth) do
-    NervesHubCore.request(:delete, path(org, product), "", auth)
-  end
-
-  def update(org, product, params, %Auth{} = auth) do
+  Verb: PUT
+  Path: /orgs/:org_name/products/:product_name
+  """
+  @spec update(atom() | binary(), atom() | binary(), map(), NervesHubCore.Auth.t()) ::
+          {:error, any()} | {:ok, any()}
+  def update(org_name, product_name, params, %Auth{} = auth) do
     params = %{product: params}
-    NervesHubCore.request(:put, path(org, product), params, auth)
+    NervesHubCore.request(:put, path(org_name, product_name), params, auth)
+  end
+
+  @doc false
+  @spec path(atom() | binary()) :: binary()
+  def path(org_name) do
+    Path.join(Org.path(org_name), @path)
+  end
+
+  @doc false
+  @spec path(atom() | binary(), atom() | binary()) :: binary()
+  def path(org_name, product_name) when is_atom(product_name),
+    do: path(org_name, to_string(product_name))
+
+  def path(org_name, product_name) do
+    Path.join(path(org_name), product_name)
   end
 end

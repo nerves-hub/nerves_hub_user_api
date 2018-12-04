@@ -89,7 +89,7 @@ defmodule NervesHubCore do
     ]
   end
 
-  @spec ssl_options(NervesHubCore.Auth.t() | %{}) :: Keyword.t()
+  @spec ssl_options(NervesHubCore.Config.t() | %{}) :: Keyword.t()
   defp ssl_options(%{key: key, cert: cert}) do
     [
       key: {:ECPrivateKey, X509.PrivateKey.to_der(key)},
@@ -100,11 +100,18 @@ defmodule NervesHubCore do
   defp ssl_options(_), do: []
 
   defp config do
-    Application.get_all_env(:nerves_hub_core) ||
-      [
-        host: System.get_env("NERVES_HUB_HOST") || @host,
-        port: System.get_env("NERVES_HUB_PORT") || @port
-      ]
+    opts = Application.get_all_env(:nerves_hub_core)
+
+    case opts do
+      [] ->
+        [
+          host: System.get_env("NERVES_HUB_HOST") || @host,
+          port: System.get_env("NERVES_HUB_PORT") || @port
+        ]
+
+      opts ->
+        opts
+    end
   end
 
   def put_progress(size, max) do
