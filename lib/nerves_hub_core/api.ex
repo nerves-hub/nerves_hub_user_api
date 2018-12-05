@@ -8,8 +8,8 @@ defmodule NervesHubCore.API do
   @progress_steps 50
 
   use Tesla
-  adapter(Tesla.Adapter.Hackney)
-  if Mix.env() != :prod, do: plug(Tesla.Middleware.Logger)
+  adapter(Tesla.Adapter.Hackney, pool: :nerves_hub_core)
+  if Mix.env() == :dev, do: plug(Tesla.Middleware.Logger)
   plug(Tesla.Middleware.FollowRedirects, max_redirects: 5)
   plug(Tesla.Middleware.JSON)
 

@@ -35,10 +35,10 @@ defmodule NervesHubCore.Deployment do
           [atom() | binary()],
           NervesHubCore.Auth.t()
         ) :: {:error, any()} | {:ok, any()}
-  def create(org_name, product_name, name, firmware, version, tags, %Auth{} = auth) do
+  def create(org_name, product_name, name, firmware_uuid, version, tags, %Auth{} = auth) do
     params = %{
       name: name,
-      firmware: firmware,
+      firmware: firmware_uuid,
       conditions: %{version: version, tags: tags},
       is_active: false
     }
