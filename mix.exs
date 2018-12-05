@@ -6,6 +6,7 @@ defmodule NervesHubCore.MixProject do
       app: :nerves_hub_core,
       version: "0.1.0",
       elixir: "~> 1.7",
+      elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       docs: [main: "readme", extras: ["README.md"]],
@@ -33,6 +34,9 @@ defmodule NervesHubCore.MixProject do
     ]
   end
 
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
+
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
@@ -41,7 +45,9 @@ defmodule NervesHubCore.MixProject do
       {:hackney, "~> 1.9"},
       {:x509, "~> 0.3"},
       {:ex_doc, "~> 0.19", only: [:dev, :test], runtime: false},
-      {:dialyxir, "1.0.0-rc.4", only: [:dev, :test], runtime: false}
+      {:dialyxir, "1.0.0-rc.4", only: [:dev, :test], runtime: false},
+      {:nerves_hub_web, github: "nerves-hub/nerves_hub_web", only: :test, runtime: false},
+      {:nerves_hub_ca, github: "nerves-hub/nerves_hub_ca", only: :test, runtime: false}
     ]
   end
 end

@@ -31,11 +31,11 @@ defmodule NervesHubCore.Firmware do
           atom() | binary(),
           atom() | binary(),
           atom() | binary(),
-          non_neg_integer(),
+          non_neg_integer() | nil,
           NervesHubCore.Auth.t()
         ) :: {:error, any()} | {:ok, any()}
-  def create(org_name, product_name, tar, ttl, %Auth{} = auth) do
-    params = %{ttl: ttl}
+  def create(org_name, product_name, tar, ttl \\ nil, %Auth{} = auth) do
+    params = if ttl != nil, do: %{ttl: ttl}, else: %{}
     API.file_request(:post, path(org_name, product_name), tar, params, %Auth{} = auth)
   end
 
