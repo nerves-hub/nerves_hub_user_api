@@ -15,7 +15,7 @@ working_dir = Path.join(nerves_hub_web_path, "test/fixtures/ssl")
 
 config :nerves_hub_core,
   host: "0.0.0.0",
-  port: 4002,
+  port: 4010,
   # pass list of paths
   ca_certs: Path.expand("test/fixtures/ssl")
 
@@ -56,7 +56,7 @@ config :nerves_hub_api, NervesHubAPIWeb.Endpoint,
   watchers: [],
   pubsub: [name: NervesHubWeb.PubSub],
   https: [
-    port: 4002,
+    port: 4010,
     otp_app: :nerves_hub_api,
     # Enable client SSL
     verify: :verify_peer,

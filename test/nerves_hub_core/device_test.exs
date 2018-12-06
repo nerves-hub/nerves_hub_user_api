@@ -57,4 +57,12 @@ defmodule NervesHubCoreTest.DeviceTest do
                Device.cert_list(user["username"], device["identifier"], auth)
     end
   end
+
+  describe "auth" do
+    setup [:create_user, :create_device]
+
+    test "valid", %{user: user, device: device, device_cert: device_cert, auth: auth} do
+      assert {:ok, %{"data" => ^device}} = Device.auth(user["username"], device_cert, auth)
+    end
+  end
 end
