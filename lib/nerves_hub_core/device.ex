@@ -10,6 +10,17 @@ defmodule NervesHubCore.Device do
   @path "devices"
 
   @doc """
+  List all devices.
+
+  Verb: GET
+  Path: /orgs/:org_name/devices
+  """
+  @spec list(atom() | binary(), NervesHubCore.Auth.t()) :: {:error, any()} | {:ok, any()}
+  def list(org_name, %Auth{} = auth) do
+    API.request(:get, path(org_name), "", auth)
+  end
+
+  @doc """
   Create a new device.
 
   Verb: POST
