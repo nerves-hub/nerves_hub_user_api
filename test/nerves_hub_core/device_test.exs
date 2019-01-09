@@ -27,6 +27,15 @@ defmodule NervesHubCoreTest.DeviceTest do
     end
   end
 
+  describe "list" do
+    setup [:create_user, :create_device]
+
+    # Validation needs to return more information about the device.
+    test "valid", %{user: user, device: device, auth: auth} do
+      assert {:ok, %{"data" => devices}} = Device.list(user["username"], auth)
+    end
+  end
+
   describe "cert sign" do
     setup [:create_user, :create_device]
 
