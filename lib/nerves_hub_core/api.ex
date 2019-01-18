@@ -1,9 +1,6 @@
 defmodule NervesHubCore.API do
   @moduledoc false
 
-  @host "api.nerves-hub.org"
-  @port 443
-
   @file_chunk 4096
   @progress_steps 50
 
@@ -14,6 +11,18 @@ defmodule NervesHubCore.API do
   plug(Tesla.Middleware.JSON)
 
   alias X509.Certificate
+
+  @doc """
+  Return the URL that's used for connecting to NervesHub
+  """
+  @spec endpoint() :: String.t()
+  def endpoint() do
+    opts = Application.get_all_env(:nerves_hub_core)
+    host = System.get_env("NERVES_HUB_HOST") || opts[:api_host]
+    port = System.get_env("NERVES_HUB_PORT") || opts[:api_port]
+
+    %URI{scheme: "https", host: host, port: port, path: "/"} |> URI.to_string()
+  end
 
   def request(:get, path, params) when is_map(params) do
     client()
@@ -72,13 +81,6 @@ defmodule NervesHubCore.API do
     Tesla.client(middleware)
   end
 
-  defp endpoint do
-    config = config()
-    host = config[:host]
-    port = config[:port]
-    "https://#{host}:#{port}/"
-  end
-
   defp opts(auth) do
     ssl_options =
       auth
@@ -99,21 +101,6 @@ defmodule NervesHubCore.API do
   end
 
   defp ssl_options(_), do: []
-
-  defp config do
-    opts = Application.get_all_env(:nerves_hub_core)
-
-    case opts do
-      [] ->
-        [
-          host: System.get_env("NERVES_HUB_HOST") || @host,
-          port: System.get_env("NERVES_HUB_PORT") || @port
-        ]
-
-      opts ->
-        opts
-    end
-  end
 
   def put_progress(size, max) do
     fraction = size / max
