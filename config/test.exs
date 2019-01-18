@@ -14,8 +14,8 @@ end
 working_dir = Path.join(nerves_hub_web_path, "test/fixtures/ssl")
 
 config :nerves_hub_core,
-  host: "0.0.0.0",
-  port: 5002,
+  api_host: "0.0.0.0",
+  api_port: 5002,
   # pass list of paths
   ca_certs: Path.expand("test/fixtures/ssl")
 
