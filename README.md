@@ -3,7 +3,12 @@
 [![CircleCI](https://circleci.com/gh/nerves-hub/nerves_hub_core.svg?style=svg)](https://circleci.com/gh/nerves-hub/nerves_hub_core)
 [![Hex version](https://img.shields.io/hexpm/v/nerves_hub_core.svg "Hex version")](https://hex.pm/packages/nerves_hub_core)
 
-An HTTP interface for the NervesHub web API.
+This is a library for interacting with a NervesHub website programmatically.
+See [NervesHubCLI](https://github.com/nerves-hub/nerves_hub_cli) for using it
+with `mix`.
+
+Devices do not use this library to connect to a NervesHub server. See
+[NervesHub](https://github.com/nerves-hub/nerves_hub) for the reference client.
 
 ## Installation
 
