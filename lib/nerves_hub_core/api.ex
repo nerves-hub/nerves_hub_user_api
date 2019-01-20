@@ -19,7 +19,7 @@ defmodule NervesHubCore.API do
   def endpoint() do
     opts = Application.get_all_env(:nerves_hub_core)
     host = System.get_env("NERVES_HUB_HOST") || opts[:api_host]
-    port = System.get_env("NERVES_HUB_PORT") || opts[:api_port]
+    port = get_env_as_integer("NERVES_HUB_PORT") || opts[:api_port]
 
     %URI{scheme: "https", host: host, port: port, path: "/"} |> URI.to_string()
   end
@@ -136,5 +136,12 @@ defmodule NervesHubCore.API do
     |> Enum.map(&File.read!(Path.join(ca_cert_path, &1)))
     |> Enum.map(&Certificate.from_pem!/1)
     |> Enum.map(&Certificate.to_der/1)
+  end
+
+  defp get_env_as_integer(str) do
+    case System.get_env(str) do
+      nil -> nil
+      value -> String.to_integer(value)
+    end
   end
 end
