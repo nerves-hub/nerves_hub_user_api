@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.3.0
+
+Backwards incompatible changes:
+
+For clarity, the application config settings `host` and `port` were renamed to
+`api_host` and `api_port`. If you're using your own NervesHub instance, you will
+need to update your `config.exs`.
+
 ## v0.2.0
 
 * Enhancements
