@@ -1,11 +1,11 @@
-defmodule NervesHubCore.User do
+defmodule NervesHubUserAPI.User do
   @moduledoc """
   Manage NervesHub users
 
   Path: /users
   """
 
-  alias NervesHubCore.{Auth, API}
+  alias NervesHubUserAPI.{Auth, API}
 
   # Certificate protected
   @doc """
@@ -14,7 +14,7 @@ defmodule NervesHubCore.User do
   Verb: GET
   Path: /users/me
   """
-  @spec me(NervesHubCore.Auth.t()) :: {:error, any()} | {:ok, any()}
+  @spec me(NervesHubUserAPI.Auth.t()) :: {:error, any()} | {:ok, any()}
   def me(%Auth{} = auth) do
     API.request(:get, "users/me", "", auth)
   end

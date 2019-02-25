@@ -1,8 +1,8 @@
 defmodule NervesHubCoreTest.CACertificateTest do
   use NervesHubCoreTest.Case
-  doctest NervesHubCore.CACertificate
+  doctest NervesHubUserAPI.CACertificate
 
-  alias NervesHubCore.CACertificate
+  alias NervesHubUserAPI.CACertificate
 
   describe "create" do
     setup [:create_user]

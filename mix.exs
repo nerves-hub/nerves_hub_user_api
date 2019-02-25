@@ -1,9 +1,9 @@
-defmodule NervesHubCore.MixProject do
+defmodule NervesHubUserAPI.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :nerves_hub_core,
+      app: :nerves_hub_user_api,
       version: "0.3.0",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -19,19 +19,19 @@ defmodule NervesHubCore.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      env: [api_host: "api.nerves-hub.org", api_port: 443],
+      env: [host: "api.nerves-hub.org", port: 443],
       extra_applications: [:logger]
     ]
   end
 
   defp description do
-    "NervesHub API client"
+    "NervesHub Management API client"
   end
 
   defp package do
     [
       licenses: ["Apache-2.0"],
-      links: %{"GitHub" => "https://github.com/nerves-hub/nerves_hub_core"}
+      links: %{"GitHub" => "https://github.com/nerves-hub/nerves_hub_user_api"}
     ]
   end
 

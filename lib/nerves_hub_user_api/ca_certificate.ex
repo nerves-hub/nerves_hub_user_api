@@ -1,11 +1,11 @@
-defmodule NervesHubCore.CACertificate do
+defmodule NervesHubUserAPI.CACertificate do
   @moduledoc """
   CA certificates
 
   Path: /orgs/:org_name/ca_certificates
   """
 
-  alias NervesHubCore.{Auth, API, Org}
+  alias NervesHubUserAPI.{Auth, API, Org}
 
   @path "ca_certificates"
 
@@ -15,7 +15,7 @@ defmodule NervesHubCore.CACertificate do
   Verb: GET
   Path: /orgs/:org_name/ca_certificates
   """
-  @spec list(atom() | binary(), NervesHubCore.Auth.t()) :: {:error, any()} | {:ok, any()}
+  @spec list(atom() | binary(), NervesHubUserAPI.Auth.t()) :: {:error, any()} | {:ok, any()}
   def list(org_name, %Auth{} = auth) do
     API.request(:get, path(org_name), "", auth)
   end
@@ -27,7 +27,7 @@ defmodule NervesHubCore.CACertificate do
   Verb: POST
   Path: /orgs/:org_name/ca_certificates
   """
-  @spec create(atom() | binary(), binary(), NervesHubCore.Auth.t()) ::
+  @spec create(atom() | binary(), binary(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def create(org_name, cert_pem, %Auth{} = auth) do
     params = %{cert: Base.encode64(cert_pem)}
@@ -40,7 +40,7 @@ defmodule NervesHubCore.CACertificate do
   Verb: DELETE
   Path: /orgs/:org_name/ca_certificates/:serial
   """
-  @spec delete(atom() | binary(), binary(), NervesHubCore.Auth.t()) ::
+  @spec delete(atom() | binary(), binary(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def delete(org_name, serial, %Auth{} = auth) do
     API.request(:delete, path(org_name, serial), "", auth)

@@ -1,11 +1,11 @@
-defmodule NervesHubCore.API do
+defmodule NervesHubUserAPI.API do
   @moduledoc false
 
   @file_chunk 4096
   @progress_steps 50
 
   use Tesla
-  adapter(Tesla.Adapter.Hackney, pool: :nerves_hub_core)
+  adapter(Tesla.Adapter.Hackney, pool: :nerves_hub_user_api)
   if Mix.env() == :dev, do: plug(Tesla.Middleware.Logger)
   plug(Tesla.Middleware.FollowRedirects, max_redirects: 5)
   plug(Tesla.Middleware.JSON)
@@ -17,9 +17,9 @@ defmodule NervesHubCore.API do
   """
   @spec endpoint() :: String.t()
   def endpoint() do
-    opts = Application.get_all_env(:nerves_hub_core)
-    host = System.get_env("NERVES_HUB_HOST") || opts[:api_host]
-    port = get_env_as_integer("NERVES_HUB_PORT") || opts[:api_port]
+    opts = Application.get_all_env(:nerves_hub_user_api)
+    host = System.get_env("NERVES_HUB_HOST") || opts[:host]
+    port = get_env_as_integer("NERVES_HUB_PORT") || opts[:port]
 
     %URI{scheme: "https", host: host, port: port, path: "/"} |> URI.to_string()
   end
@@ -126,8 +126,9 @@ defmodule NervesHubCore.API do
 
   defp ca_certs() do
     ca_cert_path =
-      Application.get_env(:nerves_hub_core, :ca_certs) || System.get_env("NERVES_HUB_CA_CERTS") ||
-        :code.priv_dir(:nerves_hub_core)
+      Application.get_env(:nerves_hub_user_api, :ca_certs) ||
+        System.get_env("NERVES_HUB_CA_CERTS") ||
+        :code.priv_dir(:nerves_hub_user_api)
         |> to_string()
         |> Path.join("ca_certs")
 

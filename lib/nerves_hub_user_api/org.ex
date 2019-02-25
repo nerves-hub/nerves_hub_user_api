@@ -1,4 +1,4 @@
-defmodule NervesHubCore.Org do
+defmodule NervesHubUserAPI.Org do
   @moduledoc false
 
   @path "orgs"

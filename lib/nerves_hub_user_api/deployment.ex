@@ -1,10 +1,10 @@
-defmodule NervesHubCore.Deployment do
+defmodule NervesHubUserAPI.Deployment do
   @moduledoc """
   Manage NervesHub deployments
 
   Path: /orgs/:org_name/products/:product_name/deployments
   """
-  alias NervesHubCore.{Auth, API, Product}
+  alias NervesHubUserAPI.{Auth, API, Product}
 
   @path "deployments"
 
@@ -14,7 +14,7 @@ defmodule NervesHubCore.Deployment do
   Verb: GET
   Path: /orgs/:org_name/products/:product_name/deployments
   """
-  @spec list(atom() | binary(), atom() | binary(), NervesHubCore.Auth.t()) ::
+  @spec list(atom() | binary(), atom() | binary(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def list(org_name, product_name, %Auth{} = auth) do
     API.request(:get, path(org_name, product_name), "", auth)
@@ -33,7 +33,7 @@ defmodule NervesHubCore.Deployment do
           atom() | binary(),
           atom() | binary(),
           [atom() | binary()],
-          NervesHubCore.Auth.t()
+          NervesHubUserAPI.Auth.t()
         ) :: {:error, any()} | {:ok, any()}
   def create(org_name, product_name, name, firmware_uuid, version, tags, %Auth{} = auth) do
     params = %{
@@ -52,7 +52,7 @@ defmodule NervesHubCore.Deployment do
   Verb: PUT
   Path: /orgs/:org_name/products/:product_name/deployments/:depolyment_name
   """
-  @spec update(atom() | binary(), atom() | binary(), binary(), map(), NervesHubCore.Auth.t()) ::
+  @spec update(atom() | binary(), atom() | binary(), binary(), map(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def update(org_name, product_name, deployment_name, params, %Auth{} = auth) do
     params = %{deployment: params}
