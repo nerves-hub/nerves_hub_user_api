@@ -1,8 +1,8 @@
 defmodule NervesHubCoreTest.KeyTest do
   use NervesHubCoreTest.Case
-  doctest NervesHubCore.Key
+  doctest NervesHubUserAPI.Key
 
-  alias NervesHubCore.Key
+  alias NervesHubUserAPI.Key
 
   describe "create" do
     setup [:create_user]

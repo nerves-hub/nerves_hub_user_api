@@ -1,8 +1,8 @@
 defmodule NervesHubCoreTest.FirmwareTest do
   use NervesHubCoreTest.Case
-  doctest NervesHubCore.Firmware
+  doctest NervesHubUserAPI.Firmware
 
-  alias NervesHubCore.Firmware
+  alias NervesHubUserAPI.Firmware
 
   describe "create" do
     setup [:create_user, :create_key, :create_product]

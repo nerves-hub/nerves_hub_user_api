@@ -1,11 +1,11 @@
-defmodule NervesHubCore.Key do
+defmodule NervesHubUserAPI.Key do
   @moduledoc """
   Manages firmware signing keys
 
   Path: /orgs/:org_name/keys
   """
 
-  alias NervesHubCore.{Auth, API, Org}
+  alias NervesHubUserAPI.{Auth, API, Org}
 
   @path "keys"
 
@@ -15,7 +15,7 @@ defmodule NervesHubCore.Key do
   Verb: GET
   Path: /orgs/:org_name/keys
   """
-  @spec list(atom() | binary(), NervesHubCore.Auth.t()) :: {:error, any()} | {:ok, any()}
+  @spec list(atom() | binary(), NervesHubUserAPI.Auth.t()) :: {:error, any()} | {:ok, any()}
   def list(org_name, %Auth{} = auth) do
     API.request(:get, path(org_name), "", auth)
   end
@@ -26,7 +26,7 @@ defmodule NervesHubCore.Key do
   Verb: POST
   Path: /orgs/:org_name/keys
   """
-  @spec create(atom() | binary(), binary(), binary(), NervesHubCore.Auth.t()) ::
+  @spec create(atom() | binary(), binary(), binary(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def create(org_name, key_name, key, %Auth{} = auth) do
     params = %{name: key_name, key: key}
@@ -39,7 +39,7 @@ defmodule NervesHubCore.Key do
   Verb: DELETE
   Path: /orgs/:org_name/keys/:key_name
   """
-  @spec delete(atom() | binary(), binary(), NervesHubCore.Auth.t()) ::
+  @spec delete(atom() | binary(), binary(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def delete(org_name, key_name, %Auth{} = auth) do
     API.request(:delete, path(org_name, key_name), "", auth)

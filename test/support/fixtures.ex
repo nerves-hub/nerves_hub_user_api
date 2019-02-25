@@ -19,7 +19,7 @@ defmodule NervesHubCoreTest.Fixtures do
   @deployment_tags ["test"]
   @deployment_version "1.0.0"
 
-  alias NervesHubCore.{User, Key, Product, Firmware, Device, Deployment, CACertificate}
+  alias NervesHubUserAPI.{User, Key, Product, Firmware, Device, Deployment, CACertificate}
 
   def user_name, do: @user_name
   def user_email, do: @email

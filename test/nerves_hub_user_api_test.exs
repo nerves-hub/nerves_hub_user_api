@@ -1,4 +1,4 @@
 defmodule NervesHubCoreTest do
   use ExUnit.Case
-  doctest NervesHubCore
+  doctest NervesHubUserAPI
 end

@@ -1,4 +1,4 @@
-defmodule NervesHubCore.Auth do
+defmodule NervesHubUserAPI.Auth do
   defstruct cert: nil,
             key: nil
 
@@ -7,7 +7,7 @@ defmodule NervesHubCore.Auth do
           key: X509.PrivateKey.t()
         }
 
-  @spec new(keyword() | map()) :: NervesHubCore.Auth.t()
+  @spec new(keyword() | map()) :: NervesHubUserAPI.Auth.t()
   def new(opts) do
     %__MODULE__{
       cert: opts[:cert],

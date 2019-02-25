@@ -31,11 +31,11 @@ defmodule NervesHubCoreTest.Case do
     csr64 = Base.encode64(csr_pem)
 
     {:ok, %{"data" => %{"cert" => cert}}} =
-      NervesHubCore.User.sign(Fixtures.user_email(), Fixtures.user_password(), csr64, "test")
+      NervesHubUserAPI.User.sign(Fixtures.user_email(), Fixtures.user_password(), csr64, "test")
 
     recycle_pool()
 
-    auth = NervesHubCore.Auth.new(key: key, cert: X509.Certificate.from_pem!(cert))
+    auth = NervesHubUserAPI.Auth.new(key: key, cert: X509.Certificate.from_pem!(cert))
     {:ok, Map.merge(context, %{user: user, auth: auth})}
   end
 
@@ -61,7 +61,7 @@ defmodule NervesHubCoreTest.Case do
     csr64 = Base.encode64(csr_pem)
 
     {:ok, %{"data" => resp}} =
-      NervesHubCore.Device.cert_sign(context.user["username"], device_identifier, csr64, auth)
+      NervesHubUserAPI.Device.cert_sign(context.user["username"], device_identifier, csr64, auth)
 
     {:ok, Map.merge(context, %{device: device, device_cert: resp["cert"]})}
   end
@@ -76,7 +76,7 @@ defmodule NervesHubCoreTest.Case do
   end
 
   defp recycle_pool do
-    pool_name = :nerves_hub_core
+    pool_name = :nerves_hub_user_api
     :hackney_pool.stop_pool(pool_name)
     opts = [timeout: 5_000, max_connections: 5]
     :ok = :hackney_pool.start_pool(pool_name, opts)

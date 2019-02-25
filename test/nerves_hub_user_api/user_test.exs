@@ -1,8 +1,8 @@
 defmodule NervesHubCoreTest.UserTest do
   use NervesHubCoreTest.Case
-  doctest NervesHubCore.User
+  doctest NervesHubUserAPI.User
 
-  alias NervesHubCore.User
+  alias NervesHubUserAPI.User
 
   describe "register" do
     test "valid" do

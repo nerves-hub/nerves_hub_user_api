@@ -1,11 +1,11 @@
-defmodule NervesHubCore.Firmware do
+defmodule NervesHubUserAPI.Firmware do
   @moduledoc """
   Manage Firmware on NervesHub
 
   Path: /orgs/:org_name/products/:product_name/firmwares
   """
 
-  alias NervesHubCore.{Auth, API, Product}
+  alias NervesHubUserAPI.{Auth, API, Product}
 
   @path "firmwares"
 
@@ -15,7 +15,7 @@ defmodule NervesHubCore.Firmware do
   Verb: GET
   Path: /orgs/:org_name/products/:product_name/firmwares
   """
-  @spec list(atom() | binary(), atom() | binary(), NervesHubCore.Auth.t()) ::
+  @spec list(atom() | binary(), atom() | binary(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def list(org_name, product_name, %Auth{} = auth) do
     API.request(:get, path(org_name, product_name), "", auth)
@@ -32,7 +32,7 @@ defmodule NervesHubCore.Firmware do
           atom() | binary(),
           atom() | binary(),
           non_neg_integer() | nil,
-          NervesHubCore.Auth.t()
+          NervesHubUserAPI.Auth.t()
         ) :: {:error, any()} | {:ok, any()}
   def create(org_name, product_name, tar, ttl \\ nil, %Auth{} = auth) do
     params = if ttl != nil, do: %{ttl: ttl}, else: %{}
@@ -49,7 +49,7 @@ defmodule NervesHubCore.Firmware do
           atom() | binary(),
           atom() | binary(),
           binary(),
-          NervesHubCore.Auth.t()
+          NervesHubUserAPI.Auth.t()
         ) :: {:error, any()} | {:ok, any()}
   def delete(org_name, product_name, uuid, %Auth{} = auth) do
     path = Path.join(path(org_name, product_name), uuid)

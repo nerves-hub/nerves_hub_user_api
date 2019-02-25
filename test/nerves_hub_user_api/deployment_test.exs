@@ -1,8 +1,8 @@
 defmodule NervesHubCoreTest.DeploymentTest do
   use NervesHubCoreTest.Case
-  doctest NervesHubCore.Deployment
+  doctest NervesHubUserAPI.Deployment
 
-  alias NervesHubCore.Deployment
+  alias NervesHubUserAPI.Deployment
 
   describe "create" do
     setup [:create_user, :create_key, :create_product, :create_firmware]

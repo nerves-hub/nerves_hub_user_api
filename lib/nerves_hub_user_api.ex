@@ -1,0 +1,2 @@
+defmodule NervesHubUserAPI do
+end

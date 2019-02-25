@@ -1,8 +1,8 @@
 defmodule NervesHubCoreTest.ProductTest do
   use NervesHubCoreTest.Case
-  doctest NervesHubCore.Product
+  doctest NervesHubUserAPI.Product
 
-  alias NervesHubCore.Product
+  alias NervesHubUserAPI.Product
 
   describe "create" do
     setup [:create_user]
