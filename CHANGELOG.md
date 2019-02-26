@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.4.0
+
+Backwards incompatible changes:
+
+Renamed the project `nerves_hub_user_api`
+Changed configuration settings from `api_host` and `api_port` back to `host` and
+`port`. You will need to update these your settings and the application name
+in your`config.exs` file.
+
 ## v0.3.0
 
 Backwards incompatible changes:
