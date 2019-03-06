@@ -47,6 +47,18 @@ defmodule NervesHubUserAPI.Device do
   end
 
   @doc """
+  Delete an existing device.
+
+  Verb: DELETE
+  Path: /orgs/:org_name/devices/:device_identifer
+  """
+  @spec delete(atom() | binary(), binary(), NervesHubUserAPI.Auth.t()) ::
+          {:error, any()} | {:ok, any()}
+  def delete(org_name, device_identifier, %Auth{} = auth) do
+    API.request(:delete, path(org_name, device_identifier), "", auth)
+  end
+
+  @doc """
   Check authentication status for device certificate.
 
   Verb: POST

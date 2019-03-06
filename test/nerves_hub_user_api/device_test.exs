@@ -27,6 +27,14 @@ defmodule NervesHubCoreTest.DeviceTest do
     end
   end
 
+  describe "delete" do
+    setup [:create_user, :create_device]
+
+    test "valid", %{user: user, device: device, auth: auth} do
+      assert {:ok, _} = Device.delete(user["username"], device["identifier"], auth)
+    end
+  end
+
   describe "list" do
     setup [:create_user, :create_device]
 
