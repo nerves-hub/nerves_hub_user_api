@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.4.1
+
+* New features
+  * Support deleting devices via the API
+
 ## v0.4.0
 
 Backwards incompatible changes:
