@@ -22,6 +22,11 @@ defmodule NervesHubCoreTest.Case do
     :ok
   end
 
+  def create_users(context) do
+    user2 = Fixtures.user(%{username: "test2", email: "test2@test.com"})
+    create_user(Map.put(context, :user2, user2))
+  end
+
   def create_user(context) do
     user = Fixtures.user()
 
