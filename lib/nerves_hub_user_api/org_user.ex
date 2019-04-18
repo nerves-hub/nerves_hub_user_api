@@ -7,6 +7,8 @@ defmodule NervesHubUserAPI.OrgUser do
 
   alias NervesHubUserAPI.{Auth, API, Org}
 
+  @type role :: :admin | :delete | :write | :read
+
   @path "users"
   @roles [:admin, :delete, :write, :read]
 
@@ -16,7 +18,7 @@ defmodule NervesHubUserAPI.OrgUser do
   Verb: GET
   Path: /orgs/:org_name/users
   """
-  @spec list(atom() | binary(), NervesHubUserAPI.Auth.t()) :: {:error, any()} | {:ok, any()}
+  @spec list(String.t(), NervesHubUserAPI.Auth.t()) :: {:error, any()} | {:ok, any()}
   def list(org_name, %Auth{} = auth) do
     API.request(:get, path(org_name), "", auth)
   end
@@ -27,7 +29,7 @@ defmodule NervesHubUserAPI.OrgUser do
   Verb: POST
   Path: /orgs/:org_name/users
   """
-  @spec add(atom() | binary(), atom() | binary(), atom(), NervesHubUserAPI.Auth.t()) ::
+  @spec add(String.t(), String.t(), NervesHubUserAPI.role(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def add(org_name, username, role, %Auth{} = auth) when role in @roles do
     params = %{username: username, role: role}
@@ -44,7 +46,7 @@ defmodule NervesHubUserAPI.OrgUser do
   Verb: PUT
   Path: /orgs/:org_name/users/:username
   """
-  @spec update(atom() | binary(), atom() | binary(), binary(), NervesHubUserAPI.Auth.t()) ::
+  @spec update(String.t(), String.t(), NervesHubUserAPI.role(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def update(org_name, username, role, %Auth{} = auth) do
     params = %{role: role}
@@ -57,13 +59,13 @@ defmodule NervesHubUserAPI.OrgUser do
   Verb: DELETE
   Path: /orgs/:org_name/users/:username
   """
-  @spec remove(atom() | binary(), atom() | binary(), NervesHubUserAPI.Auth.t()) ::
+  @spec remove(String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def remove(org_name, username, %Auth{} = auth) do
     API.request(:delete, path(org_name, username), "", auth)
   end
 
-  @spec path(atom() | binary()) :: binary()
+  @spec path(String.t()) :: String.t()
   def path(org) when is_atom(org), do: to_string(org) |> path()
 
   def path(org) when is_binary(org) do
@@ -71,7 +73,7 @@ defmodule NervesHubUserAPI.OrgUser do
   end
 
   @doc false
-  @spec path(atom() | binary(), atom() | binary()) :: binary()
+  @spec path(String.t(), String.t()) :: String.t()
   def path(org_name, username) do
     Path.join(path(org_name), username)
   end

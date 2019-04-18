@@ -15,7 +15,7 @@ defmodule NervesHubUserAPI.Key do
   Verb: GET
   Path: /orgs/:org_name/keys
   """
-  @spec list(atom() | binary(), NervesHubUserAPI.Auth.t()) :: {:error, any()} | {:ok, any()}
+  @spec list(String.t(), NervesHubUserAPI.Auth.t()) :: {:error, any()} | {:ok, any()}
   def list(org_name, %Auth{} = auth) do
     API.request(:get, path(org_name), "", auth)
   end
@@ -26,7 +26,7 @@ defmodule NervesHubUserAPI.Key do
   Verb: POST
   Path: /orgs/:org_name/keys
   """
-  @spec create(atom() | binary(), binary(), binary(), NervesHubUserAPI.Auth.t()) ::
+  @spec create(String.t(), String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def create(org_name, key_name, key, %Auth{} = auth) do
     params = %{name: key_name, key: key}
@@ -39,20 +39,20 @@ defmodule NervesHubUserAPI.Key do
   Verb: DELETE
   Path: /orgs/:org_name/keys/:key_name
   """
-  @spec delete(atom() | binary(), binary(), NervesHubUserAPI.Auth.t()) ::
+  @spec delete(String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def delete(org_name, key_name, %Auth{} = auth) do
     API.request(:delete, path(org_name, key_name), "", auth)
   end
 
   @doc false
-  @spec path(atom() | binary()) :: binary()
+  @spec path(String.t()) :: String.t()
   def path(org_name) do
     Path.join(Org.path(org_name), @path)
   end
 
   @doc false
-  @spec path(atom() | binary(), atom() | binary()) :: binary()
+  @spec path(String.t(), String.t()) :: String.t()
   def path(org_name, key_name) do
     Path.join(path(org_name), key_name)
   end

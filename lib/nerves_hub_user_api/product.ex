@@ -15,7 +15,7 @@ defmodule NervesHubUserAPI.Product do
   Verb: GET
   Path: /orgs/:org_name/products
   """
-  @spec list(atom() | binary(), NervesHubUserAPI.Auth.t()) :: {:error, any()} | {:ok, any()}
+  @spec list(String.t(), NervesHubUserAPI.Auth.t()) :: {:error, any()} | {:ok, any()}
   def list(org_name, %Auth{} = auth) do
     API.request(:get, path(org_name), "", auth)
   end
@@ -26,7 +26,7 @@ defmodule NervesHubUserAPI.Product do
   Verb: POST
   Path: /orgs/:org_name/products
   """
-  @spec create(atom() | binary(), any(), NervesHubUserAPI.Auth.t()) ::
+  @spec create(String.t(), any(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def create(org_name, product_name, %Auth{} = auth) do
     params = %{name: product_name}
@@ -39,7 +39,7 @@ defmodule NervesHubUserAPI.Product do
   Verb: DELETE
   Path: /orgs/:org_name/products/:product_name
   """
-  @spec delete(atom() | binary(), atom() | binary(), NervesHubUserAPI.Auth.t()) ::
+  @spec delete(String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def delete(org_name, product_name, %Auth{} = auth) do
     API.request(:delete, path(org_name, product_name), "", auth)
@@ -51,7 +51,7 @@ defmodule NervesHubUserAPI.Product do
   Verb: PUT
   Path: /orgs/:org_name/products/:product_name
   """
-  @spec update(atom() | binary(), atom() | binary(), map(), NervesHubUserAPI.Auth.t()) ::
+  @spec update(String.t(), String.t(), map(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def update(org_name, product_name, params, %Auth{} = auth) do
     params = %{product: params}
@@ -59,13 +59,13 @@ defmodule NervesHubUserAPI.Product do
   end
 
   @doc false
-  @spec path(atom() | binary()) :: binary()
+  @spec path(String.t()) :: String.t()
   def path(org_name) do
     Path.join(Org.path(org_name), @path)
   end
 
   @doc false
-  @spec path(atom() | binary(), atom() | binary()) :: binary()
+  @spec path(String.t(), String.t()) :: String.t()
   def path(org_name, product_name) when is_atom(product_name),
     do: path(org_name, to_string(product_name))
 

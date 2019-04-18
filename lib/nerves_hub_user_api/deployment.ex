@@ -14,7 +14,7 @@ defmodule NervesHubUserAPI.Deployment do
   Verb: GET
   Path: /orgs/:org_name/products/:product_name/deployments
   """
-  @spec list(atom() | binary(), atom() | binary(), NervesHubUserAPI.Auth.t()) ::
+  @spec list(String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def list(org_name, product_name, %Auth{} = auth) do
     API.request(:get, path(org_name, product_name), "", auth)
@@ -27,12 +27,12 @@ defmodule NervesHubUserAPI.Deployment do
   Path: /orgs/:org_name/products/:product_name/deployments
   """
   @spec create(
-          atom() | binary(),
-          atom() | binary(),
-          atom() | binary(),
-          atom() | binary(),
-          atom() | binary(),
-          [atom() | binary()],
+          String.t(),
+          String.t(),
+          String.t(),
+          String.t(),
+          String.t(),
+          [String.t()],
           NervesHubUserAPI.Auth.t()
         ) :: {:error, any()} | {:ok, any()}
   def create(org_name, product_name, name, firmware_uuid, version, tags, %Auth{} = auth) do
@@ -52,7 +52,7 @@ defmodule NervesHubUserAPI.Deployment do
   Verb: PUT
   Path: /orgs/:org_name/products/:product_name/deployments/:depolyment_name
   """
-  @spec update(atom() | binary(), atom() | binary(), binary(), map(), NervesHubUserAPI.Auth.t()) ::
+  @spec update(String.t(), String.t(), String.t(), map(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def update(org_name, product_name, deployment_name, params, %Auth{} = auth) do
     params = %{deployment: params}
@@ -60,13 +60,13 @@ defmodule NervesHubUserAPI.Deployment do
   end
 
   @doc false
-  @spec path(atom() | binary(), atom() | binary()) :: binary()
+  @spec path(String.t(), String.t()) :: String.t()
   def path(org_name, product_name) do
     Path.join(Product.path(org_name, product_name), @path)
   end
 
   @doc false
-  @spec path(atom() | binary(), atom() | binary(), atom() | binary()) :: binary()
+  @spec path(String.t(), String.t(), String.t()) :: String.t()
   def path(org_name, product_name, deployment_name) do
     Path.join(path(org_name, product_name), deployment_name)
   end

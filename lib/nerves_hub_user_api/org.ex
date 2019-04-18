@@ -3,7 +3,7 @@ defmodule NervesHubUserAPI.Org do
 
   @path "orgs"
 
-  @spec path(atom() | binary()) :: binary()
+  @spec path(String.t()) :: String.t()
   def path(org) when is_atom(org), do: to_string(org) |> path()
 
   def path(org) when is_binary(org) do

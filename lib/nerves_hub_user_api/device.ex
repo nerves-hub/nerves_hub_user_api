@@ -15,7 +15,7 @@ defmodule NervesHubUserAPI.Device do
   Verb: GET
   Path: /orgs/:org_name/devices
   """
-  @spec list(atom() | binary(), NervesHubUserAPI.Auth.t()) :: {:error, any()} | {:ok, any()}
+  @spec list(String.t(), NervesHubUserAPI.Auth.t()) :: {:error, any()} | {:ok, any()}
   def list(org_name, %Auth{} = auth) do
     API.request(:get, path(org_name), "", auth)
   end
@@ -26,7 +26,7 @@ defmodule NervesHubUserAPI.Device do
   Verb: POST
   Path: /orgs/:org_name/devices
   """
-  @spec create(atom() | binary(), binary(), binary(), [binary()], NervesHubUserAPI.Auth.t()) ::
+  @spec create(String.t(), String.t(), String.t(), [String.t()], NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def create(org_name, identifier, description, tags, %Auth{} = auth) do
     params = %{identifier: identifier, description: description, tags: tags}
@@ -39,7 +39,7 @@ defmodule NervesHubUserAPI.Device do
   Verb: PUT
   Path: /orgs/:org_name/devices/:device_identifier
   """
-  @spec update(atom() | binary(), binary(), map(), NervesHubUserAPI.Auth.t()) ::
+  @spec update(String.t(), String.t(), map(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def update(org_name, device_identifier, params, %Auth{} = auth) do
     params = Map.merge(params, %{identifier: device_identifier})
@@ -52,7 +52,7 @@ defmodule NervesHubUserAPI.Device do
   Verb: DELETE
   Path: /orgs/:org_name/devices/:device_identifer
   """
-  @spec delete(atom() | binary(), binary(), NervesHubUserAPI.Auth.t()) ::
+  @spec delete(String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def delete(org_name, device_identifier, %Auth{} = auth) do
     API.request(:delete, path(org_name, device_identifier), "", auth)
@@ -64,7 +64,7 @@ defmodule NervesHubUserAPI.Device do
   Verb: POST
   Path: /orgs/:org_name/devices/auth
   """
-  @spec auth(atom() | binary(), binary(), NervesHubUserAPI.Auth.t()) ::
+  @spec auth(String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def auth(org_name, cert_pem, %Auth{} = auth) do
     params = %{certificate: Base.encode64(cert_pem)}
@@ -78,7 +78,7 @@ defmodule NervesHubUserAPI.Device do
   Verb: GET
   Path: /orgs/:org_name/devices/:device_identifier/certificates
   """
-  @spec cert_list(atom() | binary(), binary(), NervesHubUserAPI.Auth.t()) ::
+  @spec cert_list(String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def cert_list(org_name, device_identifier, %Auth{} = auth) do
     API.request(:get, cert_path(org_name, device_identifier), "", auth)
@@ -90,7 +90,7 @@ defmodule NervesHubUserAPI.Device do
   Verb: POST
   Path: /orgs/:org_name/devices/:device_identifier/certificates/sign
   """
-  @spec cert_sign(atom() | binary(), binary(), binary(), NervesHubUserAPI.Auth.t()) ::
+  @spec cert_sign(String.t(), String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def cert_sign(org_name, device_identifier, csr, %Auth{} = auth) do
     params = %{identifier: device_identifier, csr: csr}
@@ -99,19 +99,19 @@ defmodule NervesHubUserAPI.Device do
   end
 
   @doc false
-  @spec path(atom() | binary()) :: binary()
+  @spec path(String.t()) :: String.t()
   def path(org_name) do
     Path.join(Org.path(org_name), @path)
   end
 
   @doc false
-  @spec path(atom() | binary(), atom() | binary()) :: binary()
+  @spec path(String.t(), String.t()) :: String.t()
   def path(org_name, device_identifier) do
     Path.join(path(org_name), device_identifier)
   end
 
   @doc false
-  @spec cert_path(atom() | binary(), atom() | binary()) :: binary()
+  @spec cert_path(String.t(), String.t()) :: String.t()
   def cert_path(org, device) do
     Path.join(path(org, device), "certificates")
   end
