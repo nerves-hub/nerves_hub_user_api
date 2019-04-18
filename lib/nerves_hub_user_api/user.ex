@@ -33,7 +33,7 @@ defmodule NervesHubUserAPI.User do
   end
 
   @doc """
-  Validate authtication of an existing user.
+  Validate authentication of an existing user.
 
   Verb: POST
   Path: /users/auth
