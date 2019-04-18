@@ -26,7 +26,7 @@ defmodule NervesHubUserAPI.User do
   Verb: POST
   Path: /users/register
   """
-  @spec register(binary(), binary(), binary()) :: {:error, any()} | {:ok, any()}
+  @spec register(String.t(), String.t(), String.t()) :: {:error, any()} | {:ok, any()}
   def register(username, email, password) do
     params = %{username: username, email: email, password: password}
     API.request(:post, "users/register", params)
@@ -38,7 +38,7 @@ defmodule NervesHubUserAPI.User do
   Verb: POST
   Path: /users/auth
   """
-  @spec auth(binary(), binary()) :: {:error, any()} | {:ok, any()}
+  @spec auth(String.t(), String.t()) :: {:error, any()} | {:ok, any()}
   def auth(email, password) do
     params = %{email: email, password: password}
     API.request(:post, "users/auth", params)
@@ -50,7 +50,7 @@ defmodule NervesHubUserAPI.User do
   Verb: POST
   Path: /users/sign
   """
-  @spec sign(binary(), binary(), binary(), binary()) :: {:error, any()} | {:ok, any()}
+  @spec sign(String.t(), String.t(), String.t(), String.t()) :: {:error, any()} | {:ok, any()}
   def sign(email, password, csr, description) do
     params = %{email: email, password: password, csr: csr, description: description}
     API.request(:post, "users/sign", params)

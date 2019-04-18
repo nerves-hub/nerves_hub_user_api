@@ -15,7 +15,7 @@ defmodule NervesHubUserAPI.CACertificate do
   Verb: GET
   Path: /orgs/:org_name/ca_certificates
   """
-  @spec list(atom() | binary(), NervesHubUserAPI.Auth.t()) :: {:error, any()} | {:ok, any()}
+  @spec list(String.t(), NervesHubUserAPI.Auth.t()) :: {:error, any()} | {:ok, any()}
   def list(org_name, %Auth{} = auth) do
     API.request(:get, path(org_name), "", auth)
   end
@@ -27,7 +27,7 @@ defmodule NervesHubUserAPI.CACertificate do
   Verb: POST
   Path: /orgs/:org_name/ca_certificates
   """
-  @spec create(atom() | binary(), binary(), NervesHubUserAPI.Auth.t()) ::
+  @spec create(String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def create(org_name, cert_pem, %Auth{} = auth) do
     params = %{cert: Base.encode64(cert_pem)}
@@ -40,20 +40,20 @@ defmodule NervesHubUserAPI.CACertificate do
   Verb: DELETE
   Path: /orgs/:org_name/ca_certificates/:serial
   """
-  @spec delete(atom() | binary(), binary(), NervesHubUserAPI.Auth.t()) ::
+  @spec delete(String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def delete(org_name, serial, %Auth{} = auth) do
     API.request(:delete, path(org_name, serial), "", auth)
   end
 
   @doc false
-  @spec path(atom() | binary()) :: binary()
+  @spec path(String.t()) :: String.t()
   def path(org_name) do
     Path.join(Org.path(org_name), @path)
   end
 
   @doc false
-  @spec path(atom() | binary(), atom() | binary()) :: binary()
+  @spec path(String.t(), String.t()) :: String.t()
   def path(org_name, serial) do
     Path.join(path(org_name), serial)
   end

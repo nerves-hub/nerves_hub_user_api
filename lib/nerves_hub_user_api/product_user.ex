@@ -16,7 +16,7 @@ defmodule NervesHubUserAPI.ProductUser do
   Verb: GET
   Path: /orgs/:org_name/product/:product_name/users
   """
-  @spec list(atom() | binary(), atom() | binary(), NervesHubUserAPI.Auth.t()) ::
+  @spec list(String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def list(org_name, product_name, %Auth{} = auth) do
     API.request(:get, path(org_name, product_name), "", auth)
@@ -28,7 +28,13 @@ defmodule NervesHubUserAPI.ProductUser do
   Verb: POST
   Path: /orgs/:org_name/product/:product_name/users
   """
-  @spec add(atom() | binary(), atom() | binary(), binary(), atom(), NervesHubUserAPI.Auth.t()) ::
+  @spec add(
+          String.t(),
+          String.t(),
+          String.t(),
+          NervesHubUserAPI.role(),
+          NervesHubUserAPI.Auth.t()
+        ) ::
           {:error, any()} | {:ok, any()}
   def add(org_name, product_name, username, role, %Auth{} = auth) when role in @roles do
     params = %{username: username, role: role}
@@ -46,10 +52,10 @@ defmodule NervesHubUserAPI.ProductUser do
   Path: /orgs/:org_name/product/:product_name/users/:username
   """
   @spec update(
-          atom() | binary(),
-          atom() | binary(),
-          atom() | binary(),
-          atom(),
+          String.t(),
+          String.t(),
+          String.t(),
+          NervesHubUserAPI.role(),
           NervesHubUserAPI.Auth.t()
         ) ::
           {:error, any()} | {:ok, any()}
@@ -64,7 +70,7 @@ defmodule NervesHubUserAPI.ProductUser do
   Verb: DELETE
   Path: /orgs/:org_name/product/:product_name/users/:username
   """
-  @spec remove(atom() | binary(), atom() | binary(), atom() | binary(), NervesHubUserAPI.Auth.t()) ::
+  @spec remove(String.t(), String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def remove(org_name, product_name, username, %Auth{} = auth) do
     API.request(:delete, path(org_name, product_name, username), "", auth)
@@ -75,7 +81,7 @@ defmodule NervesHubUserAPI.ProductUser do
   end
 
   @doc false
-  @spec path(atom() | binary(), atom() | binary()) :: binary()
+  @spec path(String.t(), String.t()) :: String.t()
   def path(org, product, username) do
     Path.join(path(org, product), username)
   end
