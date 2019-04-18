@@ -28,7 +28,7 @@ defmodule NervesHubUserAPI.ProductUser do
   Verb: POST
   Path: /orgs/:org_name/product/:product_name/users
   """
-  @spec add(atom() | binary(), atom() | binary(), binary(), binary(), NervesHubUserAPI.Auth.t()) ::
+  @spec add(atom() | binary(), atom() | binary(), binary(), atom(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def add(org_name, product_name, username, role, %Auth{} = auth) when role in @roles do
     params = %{username: username, role: role}
@@ -49,7 +49,7 @@ defmodule NervesHubUserAPI.ProductUser do
           atom() | binary(),
           atom() | binary(),
           atom() | binary(),
-          binary(),
+          atom(),
           NervesHubUserAPI.Auth.t()
         ) ::
           {:error, any()} | {:ok, any()}
@@ -64,7 +64,7 @@ defmodule NervesHubUserAPI.ProductUser do
   Verb: DELETE
   Path: /orgs/:org_name/product/:product_name/users/:username
   """
-  @spec remove(atom() | binary(), atom() | binary(), binary(), NervesHubUserAPI.Auth.t()) ::
+  @spec remove(atom() | binary(), atom() | binary(), atom() | binary(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def remove(org_name, product_name, username, %Auth{} = auth) do
     API.request(:delete, path(org_name, product_name, username), "", auth)
