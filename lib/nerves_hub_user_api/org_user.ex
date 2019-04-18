@@ -27,7 +27,7 @@ defmodule NervesHubUserAPI.OrgUser do
   Verb: POST
   Path: /orgs/:org_name/users
   """
-  @spec add(atom() | binary(), binary(), binary(), NervesHubUserAPI.Auth.t()) ::
+  @spec add(atom() | binary(), atom() | binary(), atom(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def add(org_name, username, role, %Auth{} = auth) when role in @roles do
     params = %{username: username, role: role}
@@ -57,7 +57,7 @@ defmodule NervesHubUserAPI.OrgUser do
   Verb: DELETE
   Path: /orgs/:org_name/users/:username
   """
-  @spec remove(atom() | binary(), binary(), NervesHubUserAPI.Auth.t()) ::
+  @spec remove(atom() | binary(), atom() | binary(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
   def remove(org_name, username, %Auth{} = auth) do
     API.request(:delete, path(org_name, username), "", auth)
