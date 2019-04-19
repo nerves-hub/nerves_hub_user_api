@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.5.0
+
+* New features
+  * Added support managing user roles for organizations and products.
+    * `OrgUser` `add / update / remove / list`
+    * `ProductUser` `add / update / remove / list`
+
 ## v0.4.1
 
 * New features
