@@ -26,13 +26,18 @@ defmodule NervesHubUserAPI.API do
 
   def request(:get, path, params) when is_map(params) do
     client()
-    |> request(method: :get, url: path, query: Map.to_list(params), opts: [adapter: opts(%{})])
+    |> request(
+      method: :get,
+      url: URI.encode(path),
+      query: Map.to_list(params),
+      opts: [adapter: opts(%{})]
+    )
     |> resp()
   end
 
   def request(verb, path, params, auth \\ %{}) do
     client()
-    |> request(method: verb, url: path, body: params, opts: [adapter: opts(auth)])
+    |> request(method: verb, url: URI.encode(path), body: params, opts: [adapter: opts(auth)])
     |> resp()
   end
 
@@ -61,7 +66,7 @@ defmodule NervesHubUserAPI.API do
           end).()
 
     client()
-    |> request(method: verb, url: path, body: mp, opts: [adapter: opts(auth)])
+    |> request(method: verb, url: URI.encode(path), body: mp, opts: [adapter: opts(auth)])
     |> resp()
   end
 
