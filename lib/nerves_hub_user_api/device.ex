@@ -2,10 +2,10 @@ defmodule NervesHubUserAPI.Device do
   @moduledoc """
   Manage NervesHub devices
 
-  Path: /orgs/:org_name/devices
+  Path: /orgs/:org_name/products/:product_name/devices
   """
 
-  alias NervesHubUserAPI.{Auth, API, Org}
+  alias NervesHubUserAPI.{Auth, API, Product}
 
   @path "devices"
 
@@ -13,62 +13,69 @@ defmodule NervesHubUserAPI.Device do
   List all devices.
 
   Verb: GET
-  Path: /orgs/:org_name/devices
+  Path: /orgs/:org_name/products/:product_name/devices
   """
-  @spec list(String.t(), NervesHubUserAPI.Auth.t()) :: {:error, any()} | {:ok, any()}
-  def list(org_name, %Auth{} = auth) do
-    API.request(:get, path(org_name), "", auth)
+  @spec list(String.t(), String.t(), NervesHubUserAPI.Auth.t()) :: {:error, any()} | {:ok, any()}
+  def list(org_name, product_name, %Auth{} = auth) do
+    API.request(:get, path(org_name, product_name), "", auth)
   end
 
   @doc """
   Create a new device.
 
   Verb: POST
-  Path: /orgs/:org_name/devices
+  Path: /orgs/:org_name/products/:product_name/devices
   """
-  @spec create(String.t(), String.t(), String.t(), [String.t()], NervesHubUserAPI.Auth.t()) ::
+  @spec create(
+          String.t(),
+          String.t(),
+          String.t(),
+          String.t(),
+          [String.t()],
+          NervesHubUserAPI.Auth.t()
+        ) ::
           {:error, any()} | {:ok, any()}
-  def create(org_name, identifier, description, tags, %Auth{} = auth) do
+  def create(org_name, product_name, identifier, description, tags, %Auth{} = auth) do
     params = %{identifier: identifier, description: description, tags: tags}
-    API.request(:post, path(org_name), params, auth)
+    API.request(:post, path(org_name, product_name), params, auth)
   end
 
   @doc """
   Update an existing device.
 
   Verb: PUT
-  Path: /orgs/:org_name/devices/:device_identifier
+  Path: /orgs/:org_name/products/:product_name/devices/:device_identifier
   """
-  @spec update(String.t(), String.t(), map(), NervesHubUserAPI.Auth.t()) ::
+  @spec update(String.t(), String.t(), String.t(), map(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
-  def update(org_name, device_identifier, params, %Auth{} = auth) do
+  def update(org_name, product_name, device_identifier, params, %Auth{} = auth) do
     params = Map.merge(params, %{identifier: device_identifier})
-    API.request(:put, path(org_name, device_identifier), params, auth)
+    API.request(:put, path(org_name, product_name, device_identifier), params, auth)
   end
 
   @doc """
   Delete an existing device.
 
   Verb: DELETE
-  Path: /orgs/:org_name/devices/:device_identifer
+  Path: /orgs/:org_name/products/:product_name/devices/:device_identifer
   """
-  @spec delete(String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
+  @spec delete(String.t(), String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
-  def delete(org_name, device_identifier, %Auth{} = auth) do
-    API.request(:delete, path(org_name, device_identifier), "", auth)
+  def delete(org_name, product_name, device_identifier, %Auth{} = auth) do
+    API.request(:delete, path(org_name, product_name, device_identifier), "", auth)
   end
 
   @doc """
   Check authentication status for device certificate.
 
   Verb: POST
-  Path: /orgs/:org_name/devices/auth
+  Path: /orgs/:org_name/products/:product_name/devices/auth
   """
-  @spec auth(String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
+  @spec auth(String.t(), String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
-  def auth(org_name, cert_pem, %Auth{} = auth) do
+  def auth(org_name, product_name, cert_pem, %Auth{} = auth) do
     params = %{certificate: Base.encode64(cert_pem)}
-    path = Path.join(path(org_name), "auth")
+    path = Path.join(path(org_name, product_name), "auth")
     API.request(:post, path, params, auth)
   end
 
@@ -76,43 +83,43 @@ defmodule NervesHubUserAPI.Device do
   List certificates for a device.
 
   Verb: GET
-  Path: /orgs/:org_name/devices/:device_identifier/certificates
+  Path: /orgs/:org_name/products/:product_name/devices/:device_identifier/certificates
   """
-  @spec cert_list(String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
+  @spec cert_list(String.t(), String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
-  def cert_list(org_name, device_identifier, %Auth{} = auth) do
-    API.request(:get, cert_path(org_name, device_identifier), "", auth)
+  def cert_list(org_name, product_name, device_identifier, %Auth{} = auth) do
+    API.request(:get, cert_path(org_name, product_name, device_identifier), "", auth)
   end
 
   @doc """
   Sign a new certificate signing request for a device.
 
   Verb: POST
-  Path: /orgs/:org_name/devices/:device_identifier/certificates/sign
+  Path: /orgs/:org_name/products/:product_name/devices/:device_identifier/certificates/sign
   """
-  @spec cert_sign(String.t(), String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
+  @spec cert_sign(String.t(), String.t(), String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
           {:error, any()} | {:ok, any()}
-  def cert_sign(org_name, device_identifier, csr, %Auth{} = auth) do
+  def cert_sign(org_name, product_name, device_identifier, csr, %Auth{} = auth) do
     params = %{identifier: device_identifier, csr: csr}
-    path = Path.join(cert_path(org_name, device_identifier), "sign")
+    path = Path.join(cert_path(org_name, product_name, device_identifier), "sign")
     API.request(:post, path, params, auth)
   end
 
   @doc false
-  @spec path(String.t()) :: String.t()
-  def path(org_name) do
-    Path.join(Org.path(org_name), @path)
-  end
-
-  @doc false
   @spec path(String.t(), String.t()) :: String.t()
-  def path(org_name, device_identifier) do
-    Path.join(path(org_name), device_identifier)
+  def path(org_name, product_name) do
+    Path.join(Product.path(org_name, product_name), @path)
   end
 
   @doc false
-  @spec cert_path(String.t(), String.t()) :: String.t()
-  def cert_path(org, device) do
-    Path.join(path(org, device), "certificates")
+  @spec path(String.t(), String.t(), String.t()) :: String.t()
+  def path(org_name, product_name, device_identifier) do
+    Path.join(path(org_name, product_name), device_identifier)
+  end
+
+  @doc false
+  @spec cert_path(String.t(), String.t(), String.t()) :: String.t()
+  def cert_path(org, product_name, device) do
+    Path.join(path(org, product_name, device), "certificates")
   end
 end
