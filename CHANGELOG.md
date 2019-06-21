@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.6.0
+
+Backwards incompatible changes:
+
+The NervesHubUserAPI.Device and NervesHubUserAPI.DeviceCertificate endpoints
+have moved to include `product` as part of its path.
+
+It used to be
+
+```text
+/orgs/:org_name/devices*
+```
+
+They have moved to:
+
+```text
+/orgs/:org_name/products/:product_name/devices*
+```
+
 ## v0.5.0
 
 * New features
