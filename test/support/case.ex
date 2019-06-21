@@ -65,8 +65,21 @@ defmodule NervesHubCoreTest.Case do
     csr_pem = X509.CSR.to_pem(csr)
     csr64 = Base.encode64(csr_pem)
 
+    product_name =
+      if product = Map.get(context, :product) do
+        product["name"]
+      else
+        Fixtures.product_name()
+      end
+
     {:ok, %{"data" => resp}} =
-      NervesHubUserAPI.Device.cert_sign(context.user["username"], device_identifier, csr64, auth)
+      NervesHubUserAPI.Device.cert_sign(
+        context.user["username"],
+        product_name,
+        device_identifier,
+        csr64,
+        auth
+      )
 
     {:ok, Map.merge(context, %{device: device, device_cert: resp["cert"]})}
   end

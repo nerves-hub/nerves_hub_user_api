@@ -70,10 +70,14 @@ defmodule NervesHubCoreTest.Fixtures do
 
   def device(auth, params \\ []) do
     org_name = params[:org_name] || user_name()
+    product_name = params[:product_name] || product_name()
     identifier = params[:identifier] || device_identifier()
     description = params[:description] || device_description()
     tags = params[:tags] || device_tags()
-    {:ok, %{"data" => device}} = Device.create(org_name, identifier, description, tags, auth)
+
+    {:ok, %{"data" => device}} =
+      Device.create(org_name, product_name, identifier, description, tags, auth)
+
     device
   end
 
