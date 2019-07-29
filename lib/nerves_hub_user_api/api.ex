@@ -95,12 +95,19 @@ defmodule NervesHubUserAPI.API do
 
   defp ssl_options(%{key: key, cert: cert}) do
     [
+      verify: :verify_peer,
+      server_name_indication: server_name_indication(),
       key: {:ECPrivateKey, X509.PrivateKey.to_der(key)},
       cert: X509.Certificate.to_der(cert)
     ]
   end
 
   defp ssl_options(_), do: []
+
+  defp server_name_indication do
+    Application.get_env(:nerves_hub_user_api, :server_name_indication) ||
+      Application.get_env(:nerves_hub_user_api, :host) |> to_charlist()
+  end
 
   def put_progress(size, max) do
     fraction = size / max
