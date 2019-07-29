@@ -17,7 +17,8 @@ config :nerves_hub_user_api,
   host: "0.0.0.0",
   port: 5002,
   # pass list of paths
-  ca_certs: Path.expand("test/fixtures/ssl")
+  ca_certs: Path.expand("test/fixtures/ssl"),
+  server_name_indication: :disable
 
 alias NervesHubCA.Intermediate.CA
 
