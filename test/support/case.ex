@@ -73,7 +73,7 @@ defmodule NervesHubCoreTest.Case do
       end
 
     {:ok, %{"data" => resp}} =
-      NervesHubUserAPI.Device.cert_sign(
+      NervesHubUserAPI.DeviceCertificate.sign(
         context.user["username"],
         product_name,
         device_identifier,
