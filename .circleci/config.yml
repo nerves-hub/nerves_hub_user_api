@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/elixir:1.8
+      - image: circleci/elixir:1.10
         environment:
           MIX_ENV: test
           DATABASE_URL: postgres://db:db@localhost:5432/db
@@ -17,8 +17,8 @@ jobs:
       - run: mix local.hex --force
       - run: mix local.rebar --force
       - checkout
-      - run: wget https://github.com/fhunleth/fwup/releases/download/v1.2.5/fwup_1.2.5_amd64.deb
-      - run: sudo dpkg -i ./fwup_1.2.5_amd64.deb
+      - run: wget https://github.com/fhunleth/fwup/releases/download/v1.8.1/fwup_1.8.1_amd64.deb
+      - run: sudo dpkg -i ./fwup_1.8.1_amd64.deb
       - restore_cache:
           keys:
             - v1-mix-cache-{{ checksum "mix.lock" }}

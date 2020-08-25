@@ -47,7 +47,9 @@ defmodule NervesHubUserAPI.MixProject do
       {:x509, "~> 0.3"},
       {:ex_doc, "~> 0.19", only: [:dev, :test], runtime: false},
       {:dialyxir, "1.0.0-rc.4", only: [:dev, :test], runtime: false},
-      {:nerves_hub_web, github: "nerves-hub/nerves_hub_web", only: :test, runtime: false},
+      {:nerves_hub_web,
+       github: "nerves-hub/nerves_hub_web", branch: "main", only: :test, runtime: false},
+      {:phoenix, "~> 1.4", only: :test, override: true},
       {:nerves_hub_ca, github: "nerves-hub/nerves_hub_ca", only: :test, runtime: false}
     ]
   end
