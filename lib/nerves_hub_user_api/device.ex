@@ -5,7 +5,7 @@ defmodule NervesHubUserAPI.Device do
   Path: /orgs/:org_name/products/:product_name/devices
   """
 
-  alias NervesHubUserAPI.{Auth, API, Product}
+  alias NervesHubUserAPI.{Auth, API, Product, DeviceCertificate}
 
   @path "devices"
 
@@ -79,30 +79,14 @@ defmodule NervesHubUserAPI.Device do
     API.request(:post, path, params, auth)
   end
 
-  @doc """
-  List certificates for a device.
-
-  Verb: GET
-  Path: /orgs/:org_name/products/:product_name/devices/:device_identifier/certificates
-  """
-  @spec cert_list(String.t(), String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
-          {:error, any()} | {:ok, any()}
+  @deprecated "use NervesHubUserAPI.DeviceCertificate.list/4 instead"
   def cert_list(org_name, product_name, device_identifier, %Auth{} = auth) do
-    API.request(:get, cert_path(org_name, product_name, device_identifier), "", auth)
+    DeviceCertificate.list(org_name, product_name, device_identifier, auth)
   end
 
-  @doc """
-  Sign a new certificate signing request for a device.
-
-  Verb: POST
-  Path: /orgs/:org_name/products/:product_name/devices/:device_identifier/certificates/sign
-  """
-  @spec cert_sign(String.t(), String.t(), String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
-          {:error, any()} | {:ok, any()}
+  @deprecated "use NervesHubUserAPI.DeviceCertificate.sign/5 instead"
   def cert_sign(org_name, product_name, device_identifier, csr, %Auth{} = auth) do
-    params = %{identifier: device_identifier, csr: csr}
-    path = Path.join(cert_path(org_name, product_name, device_identifier), "sign")
-    API.request(:post, path, params, auth)
+    DeviceCertificate.sign(org_name, product_name, device_identifier, csr, auth)
   end
 
   @doc false
@@ -115,11 +99,5 @@ defmodule NervesHubUserAPI.Device do
   @spec path(String.t(), String.t(), String.t()) :: String.t()
   def path(org_name, product_name, device_identifier) do
     Path.join(path(org_name, product_name), device_identifier)
-  end
-
-  @doc false
-  @spec cert_path(String.t(), String.t(), String.t()) :: String.t()
-  def cert_path(org, product_name, device) do
-    Path.join(path(org, product_name, device), "certificates")
   end
 end
