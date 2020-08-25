@@ -11,13 +11,13 @@ if File.exists?(nerves_hub_web_config) do
   import_config(nerves_hub_web_config)
 end
 
-working_dir = Path.join(nerves_hub_web_path, "test/fixtures/ssl")
+working_dir = Path.expand("test/tmp/pki")
 
 config :nerves_hub_user_api,
   host: "0.0.0.0",
   port: 5002,
   # pass list of paths
-  ca_certs: Path.expand("test/fixtures/ssl"),
+  ca_certs: Path.expand("test/tmp/ssl"),
   server_name_indication: :disable
 
 alias NervesHubCA.Intermediate.CA
@@ -64,6 +64,14 @@ config :nerves_hub_api, NervesHubAPIWeb.Endpoint,
     keyfile: Path.join(working_dir, "api.nerves-hub.org-key.pem"),
     certfile: Path.join(working_dir, "api.nerves-hub.org.pem"),
     cacertfile: Path.join(working_dir, "ca.pem")
+  ]
+
+config :nerves_hub_web_core, NervesHubWebCore.CertificateAuthority,
+  host: "0.0.0.0",
+  port: 8443,
+  ssl: [
+    cacertfile: Path.join(working_dir, "ca.pem"),
+    server_name_indication: :disable
   ]
 
 config :logger, level: :warn
