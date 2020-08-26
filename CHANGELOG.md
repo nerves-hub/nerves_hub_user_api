@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.7.0
+
+* Deprecations
+  * `NervesHubUserAPI.Device.cert_list/4` has been moved to
+    `NervesHubUserAPI.DeviceCertificate.list/4`
+  * `NervesHubUserAPI.Device.cert_sign/5` has been moved to
+    `NervesHubUserAPI.DeviceCertificate.sign/5`
+* New features
+  * Added `NervesHubUserAPI.DeviceCertificate.create/5` for import an existing
+    trusted certificate for a device.
+  * Added `NervesHubUserAPI.DeviceCertificate.delete/5` for deleting certificates
+    from a device.
+* Bug fixes
+  * URI encode all parameters being used in the URL of the API requests.
+
 ## v0.6.0
 
 Backwards incompatible changes:
