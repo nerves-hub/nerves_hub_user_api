@@ -14,6 +14,14 @@ defmodule NervesHubCoreTest.CACertificateTest do
 
       assert {:ok, _} = CACertificate.create(user["username"], cert_pem, auth)
     end
+
+    test "valid with description", %{user: user, auth: auth} do
+      key = X509.PrivateKey.new_ec(:secp256r1)
+      cert = X509.Certificate.self_signed(key, "CN=My CA", template: :root_ca)
+      cert_pem = X509.Certificate.to_pem(cert)
+
+      assert {:ok, _} = CACertificate.create(user["username"], cert_pem, auth, "test")
+    end
   end
 
   describe "list" do
