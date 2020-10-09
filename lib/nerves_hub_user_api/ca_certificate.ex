@@ -27,10 +27,13 @@ defmodule NervesHubUserAPI.CACertificate do
   Verb: POST
   Path: /orgs/:org_name/ca_certificates
   """
-  @spec create(String.t(), String.t(), NervesHubUserAPI.Auth.t()) ::
+  @spec create(String.t(), String.t(), NervesHubUserAPI.Auth.t(), String.t()) ::
           {:error, any()} | {:ok, any()}
-  def create(org_name, cert_pem, %Auth{} = auth) do
-    params = %{cert: Base.encode64(cert_pem)}
+  def create(org_name, cert_pem, %Auth{} = auth, description \\ nil) do
+    params = %{
+      cert: Base.encode64(cert_pem),
+      description: description
+    }
     API.request(:post, path(org_name), params, auth)
   end
 
