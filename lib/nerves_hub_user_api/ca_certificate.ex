@@ -34,6 +34,7 @@ defmodule NervesHubUserAPI.CACertificate do
       cert: Base.encode64(cert_pem),
       description: description
     }
+
     API.request(:post, path(org_name), params, auth)
   end
 

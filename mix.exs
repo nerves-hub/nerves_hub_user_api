@@ -1,18 +1,26 @@
 defmodule NervesHubUserAPI.MixProject do
   use Mix.Project
 
+  @version "0.7.0"
+  @source_url "https://github.com/nerves-hub/nerves_hub_user_api"
+
   def project do
     [
       app: :nerves_hub_user_api,
-      version: "0.7.0",
+      version: @version,
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      docs: [main: "readme", extras: ["README.md"]],
+      docs: docs(),
       description: description(),
       package: package(),
-      dialyzer: [ignore_warnings: "dialyzer.ignore-warnings"]
+      dialyzer: dialyzer(),
+      preferred_cli_env: %{
+        docs: :docs,
+        "hex.publish": :docs,
+        "hex.build": :docs
+      }
     ]
   end
 
@@ -28,10 +36,24 @@ defmodule NervesHubUserAPI.MixProject do
     "NervesHub Management API client"
   end
 
+  defp dialyzer do
+    [ignore_warnings: "dialyzer.ignore-warnings"]
+  end
+
+  defp docs do
+    [
+      extras: ["README.md", "CHANGELOG.md"],
+      main: "readme",
+      skip_undefined_reference_warnings_on: ["CHANGELOG.md"],
+      source_ref: "v#{@version}",
+      source_url: @source_url
+    ]
+  end
+
   defp package do
     [
       licenses: ["Apache-2.0"],
-      links: %{"GitHub" => "https://github.com/nerves-hub/nerves_hub_user_api"}
+      links: %{"GitHub" => @source_url}
     ]
   end
 
@@ -45,8 +67,8 @@ defmodule NervesHubUserAPI.MixProject do
       {:tesla, "~> 1.2.1 or ~> 1.3"},
       {:hackney, "~> 1.9"},
       {:x509, "~> 0.3"},
-      {:ex_doc, "~> 0.19", only: [:dev, :test], runtime: false},
-      {:dialyxir, "1.0.0-rc.4", only: [:dev, :test], runtime: false},
+      {:ex_doc, "~> 0.23", only: [:docs], runtime: false},
+      {:dialyxir, "1.0.0", only: [:dev, :test], runtime: false},
       {:nerves_hub_web,
        github: "nerves-hub/nerves_hub_web", branch: "main", only: :test, runtime: false},
       {:phoenix, "~> 1.4", only: :test, override: true},
