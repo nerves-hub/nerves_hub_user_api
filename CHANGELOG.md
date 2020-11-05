@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.7.1
+
+* New features
+  * Allow description when registering CA Certificate with
+  `NervesHubUserAPI.CACertificate.create/4` (thanks @brianberlin !! :tada:)
+
 ## v0.7.0
 
 * Deprecations
