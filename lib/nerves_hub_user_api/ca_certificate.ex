@@ -27,7 +27,7 @@ defmodule NervesHubUserAPI.CACertificate do
   Verb: POST
   Path: /orgs/:org_name/ca_certificates
   """
-  @spec create(String.t(), String.t(), NervesHubUserAPI.Auth.t(), String.t()) ::
+  @spec create(String.t(), String.t(), NervesHubUserAPI.Auth.t(), String.t() | nil) ::
           {:error, any()} | {:ok, any()}
   def create(org_name, cert_pem, %Auth{} = auth, description \\ nil) do
     params = %{
