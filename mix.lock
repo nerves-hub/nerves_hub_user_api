@@ -45,6 +45,7 @@
   "mimerl": {:hex, :mimerl, "1.2.0", "67e2d3f571088d5cfd3e550c383094b47159f3eee8ffa08e64106cdf5e981be3", [:rebar3], [], "hexpm", "f278585650aa581986264638ebf698f8bb19df297f66ad91b18910dfc6e19323"},
   "mox": {:hex, :mox, "1.0.0", "4b3c7005173f47ff30641ba044eb0fe67287743eec9bd9545e37f3002b0a9f8b", [:mix], [], "hexpm", "201b0a20b7abdaaab083e9cf97884950f8a30a1350a1da403b3145e213c6f4df"},
   "nerves_hub_ca": {:git, "https://github.com/nerves-hub/nerves_hub_ca.git", "3c353d24b11056141555ab77391af369c52d3fb7", [branch: "main"]},
+  "nerves_hub_ca_store": {:hex, :nerves_hub_ca_store, "1.0.0", "d8681e8f08d2d1b8a43184a5e8370066f62b949a4bcf19cde880a0dbe45bb1f4", [:mix], [{:x509, "~> 0.5", [hex: :x509, repo: "hexpm", optional: false]}], "hexpm", "01fbf3edc64be5bf8f3fc65f7f8ca6b82dab650af4373e201b6d441ded476c84"},
   "nerves_hub_web": {:git, "https://github.com/nerves-hub/nerves_hub_web.git", "d3c399d8364da30e77b5e5b5b3b08670c7684e53", [branch: "main"]},
   "nimble_csv": {:hex, :nimble_csv, "1.1.0", "b1dba4a86be9e03065c9de829050468e591f569100332db949e7ce71be0afc25", [:mix], [], "hexpm", "e986755bc302832cac429be6deda0fc9d82d3c82b47abefb68b3c17c9d949a3f"},
   "nimble_parsec": {:hex, :nimble_parsec, "1.1.0", "3a6fca1550363552e54c216debb6a9e95bd8d32348938e13de5eda962c0d7f89", [:mix], [], "hexpm", "08eb32d66b706e913ff748f11694b17981c0b04a33ef470e33e11b3d3ac8f54b"},

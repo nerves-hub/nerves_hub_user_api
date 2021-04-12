@@ -1,5 +1,7 @@
 use Mix.Config
 
+config :nerves_hub_user_api, ca_store: NervesHubCoreTest.CAStore
+
 nerves_hub_web_path =
   Mix.Project.deps_paths()
   |> Enum.find(&(elem(&1, 0) == :nerves_hub_web))
@@ -22,6 +24,12 @@ config :nerves_hub_user_api,
   ecto_repos: [NervesHubCA.Repo, NervesHubWebCore.Repo]
 
 alias NervesHubCA.Intermediate.CA
+
+config :nerves_hub_user_api,
+  ecto_repos: [
+    NervesHubCA.Repo,
+    NervesHubWebCore.Repo
+  ]
 
 config :nerves_hub_ca, :api,
   otp_app: :nerves_hub_ca,
