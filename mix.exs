@@ -75,6 +75,7 @@ defmodule NervesHubUserAPI.MixProject do
       {:tesla, "~> 1.2.1 or ~> 1.3"},
       {:hackney, "~> 1.9"},
       {:x509, "~> 0.3"},
+      {:nerves_hub_ca_store, "~> 1.0.0"},
       {:ex_doc, "~> 0.23", only: [:docs], runtime: false},
       {:dialyxir, "1.1.0", only: [:dev, :test], runtime: false},
 
