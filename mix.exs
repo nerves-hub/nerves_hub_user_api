@@ -28,9 +28,17 @@ defmodule NervesHubUserAPI.MixProject do
   def application do
     [
       env: [host: "api.nerves-hub.org", port: 443],
-      extra_applications: [:logger]
+      extra_applications: [:logger] ++ extra_applications(Mix.env())
     ]
   end
+
+  def extra_applications(:test),
+    do: [
+      :phoenix,
+      :ecto_sql
+    ]
+
+  def extra_applications(_), do: []
 
   defp description do
     "NervesHub Management API client"
@@ -68,11 +76,14 @@ defmodule NervesHubUserAPI.MixProject do
       {:hackney, "~> 1.9"},
       {:x509, "~> 0.3"},
       {:ex_doc, "~> 0.23", only: [:docs], runtime: false},
-      {:dialyxir, "1.0.0", only: [:dev, :test], runtime: false},
+      {:dialyxir, "1.1.0", only: [:dev, :test], runtime: false},
+
+      # test deps for integration test w/ nerves_hub_web
+      {:phoenix, "~> 1.4", only: :test, override: true},
       {:nerves_hub_web,
        github: "nerves-hub/nerves_hub_web", branch: "main", only: :test, runtime: false},
-      {:phoenix, "~> 1.4", only: :test, override: true},
-      {:nerves_hub_ca, github: "nerves-hub/nerves_hub_ca", only: :test, runtime: false}
+      {:nerves_hub_ca,
+       github: "nerves-hub/nerves_hub_ca", branch: "main", only: :test, runtime: false}
     ]
   end
 end
