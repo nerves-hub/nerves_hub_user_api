@@ -31,7 +31,7 @@ defmodule NervesHubCoreTest.DeviceTest do
     test "valid", %{user: user, product: product, device: device, auth: auth} do
       params = %{device_identifier: "device-5678"}
 
-      assert {:ok, %{"data" => device}} =
+      assert {:ok, %{"data" => _device}} =
                Device.update(
                  user["username"],
                  product["name"],

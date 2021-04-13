@@ -18,7 +18,8 @@ config :nerves_hub_user_api,
   port: 5002,
   # pass list of paths
   ca_certs: Path.expand("test/tmp/ssl"),
-  server_name_indication: :disable
+  server_name_indication: :disable,
+  ecto_repos: [NervesHubCA.Repo, NervesHubWebCore.Repo]
 
 alias NervesHubCA.Intermediate.CA
 
@@ -55,7 +56,7 @@ config :nerves_hub_api, NervesHubAPIWeb.Endpoint,
   check_origin: false,
   server: true,
   watchers: [],
-  pubsub: [name: NervesHubWeb.PubSub],
+  pubsub_server: NervesHubWeb.PubSub,
   https: [
     port: 5002,
     otp_app: :nerves_hub_api,
@@ -73,5 +74,14 @@ config :nerves_hub_web_core, NervesHubWebCore.CertificateAuthority,
     cacertfile: Path.join(working_dir, "ca.pem"),
     server_name_indication: :disable
   ]
+
+config :nerves_hub_web_core,
+  firmware_upload: NervesHubWebCore.Firmwares.Upload.File,
+  delta_updater: NervesHubCoreTest.DeltaUpdater
+
+config :nerves_hub_web_core, NervesHubWebCore.Firmwares.Upload.File,
+  enabled: true,
+  local_path: Path.join(System.tmp_dir(), "firmware"),
+  public_path: "/firmware"
 
 config :logger, level: :warn
