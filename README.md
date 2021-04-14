@@ -8,7 +8,7 @@ See [NervesHubCLI](https://github.com/nerves-hub/nerves_hub_cli) for using it
 with `mix`.
 
 Devices do not use this library to connect to a NervesHub server. See
-[NervesHub](https://github.com/nerves-hub/nerves_hub) for the reference client.
+[NervesHubLink](https://github.com/nerves-hub/nerves_hub_link) for the reference client.
 
 ## Installation
 
@@ -36,8 +36,6 @@ following variables are available:
 * `NERVES_HUB_PORT` - NervesHub API endpoint port (defaults to 443)
 * `NERVES_LOG_DISABLE_PROGRESS_BAR` - Set to disable the progress bar on file
   transfers
-* `NERVES_HUB_CA_CERTS` - The path to a directory containing CA certificates for
-  authenticating NervesHub endpoints. Defaults to `nerves-hub.org` certificates.
 
 ## Configuration
 
@@ -47,4 +45,4 @@ following keys:
 * `host` - NervesHub API endpoint address (defaults to `api.nerves-hub.org`)
 * `port` - NervesHub API endpoint port (defaults to 443)
 * `ca_store` - A module that exposes a single function `ca_certs` that returns
-               certs as a list of DER encoded binaries. See [https://github.com/nerves-hub/nerves_hub_ca_store] for more details
+  certs as a list of DER encoded binaries. (Defaults to [`NervesHubCAStore`](https://github.com/nerves-hub/nerves_hub_ca_store))
