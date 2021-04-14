@@ -18,7 +18,7 @@ by adding `nerves_hub_user_api` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:nerves_hub_user_api, "~> 0.1.0"}
+    {:nerves_hub_user_api, "~> 0.8.0"}
   ]
 end
 ```
