@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: hexpm/elixir:1.11.2-erlang-23.1.2-alpine-3.12.1
+      - image: hexpm/elixir:1.13.4-erlang-24.3.3-alpine-3.14.5
         environment:
           MIX_ENV: test
           DATABASE_URL: postgres://db:db@localhost:5432/db
