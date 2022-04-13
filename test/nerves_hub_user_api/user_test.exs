@@ -22,6 +22,15 @@ defmodule NervesHubCoreTest.UserTest do
     end
   end
 
+  describe "login" do
+    setup [:create_user_no_auth]
+
+    test "valid" do
+      assert {:ok, %{"data" => %{"token" => "nhu_" <> _}}} =
+               User.login(Fixtures.user_email(), Fixtures.user_password(), "howdy")
+    end
+  end
+
   describe "sign" do
     setup [:create_user]
 

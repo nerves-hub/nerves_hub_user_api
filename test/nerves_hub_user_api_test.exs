@@ -1,4 +1,13 @@
 defmodule NervesHubCoreTest do
-  use ExUnit.Case
+  use NervesHubCoreTest.Case
   doctest NervesHubUserAPI
+
+  alias NervesHubUserAPI.User
+
+  setup :create_peer_user
+
+  test "backwards support for user client certificate auth", %{auth: auth} do
+    assert auth.cert
+    assert {:ok, _} = User.me(auth)
+  end
 end

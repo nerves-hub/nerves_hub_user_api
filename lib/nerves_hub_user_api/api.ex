@@ -35,7 +35,7 @@ defmodule NervesHubUserAPI.API do
   end
 
   def request(verb, path, params, auth \\ %{}) do
-    client()
+    client(auth)
     |> request(method: verb, url: URI.encode(path), body: params, opts: [adapter: opts(auth)])
     |> resp()
   end
@@ -64,7 +64,7 @@ defmodule NervesHubUserAPI.API do
             end)
           end).()
 
-    client()
+    client(auth)
     |> request(method: verb, url: URI.encode(path), body: mp, opts: [adapter: opts(auth)])
     |> resp()
   end
@@ -77,19 +77,28 @@ defmodule NervesHubUserAPI.API do
 
   defp resp({:error, _reason} = err), do: err
 
-  defp client() do
+  defp client(auth \\ %{}) do
     middleware = [
-      {Tesla.Middleware.BaseUrl, endpoint()}
+      {Tesla.Middleware.BaseUrl, endpoint()},
+      {Tesla.Middleware.Headers, headers(auth)}
     ]
 
     Tesla.client(middleware)
   end
 
+  defp headers(%{token: "nh" <> _ = token}) do
+    [{"Authorization", "token #{token}"}]
+  end
+
+  defp headers(_), do: []
+
   defp opts(auth) do
     ssl_options =
-      auth
-      |> ssl_options()
-      |> Keyword.put(:cacerts, ca_certs())
+      [
+        verify: :verify_peer,
+        server_name_indication: server_name_indication(),
+        cacerts: ca_certs()
+      ] ++ peer_options(auth)
 
     [
       ssl_options: ssl_options,
@@ -97,16 +106,26 @@ defmodule NervesHubUserAPI.API do
     ]
   end
 
-  defp ssl_options(%{key: key, cert: cert}) do
+  defp peer_options(%{key: key, cert: cert, token: nil}) do
+    Logger.warn("""
+    User client certificate authentication is being deprecated.
+
+    Please use a generated access token from:
+
+      #{endpoint()}{username}/tokens
+
+    Or if you are using NervesHubCLI, you can generate a token with:
+
+      mix nerves_hub.user auth
+    """)
+
     [
-      verify: :verify_peer,
-      server_name_indication: server_name_indication(),
       key: {:ECPrivateKey, X509.PrivateKey.to_der(key)},
       cert: X509.Certificate.to_der(cert)
     ]
   end
 
-  defp ssl_options(_), do: []
+  defp peer_options(_), do: []
 
   defp server_name_indication do
     Application.get_env(:nerves_hub_user_api, :server_name_indication) ||
@@ -121,9 +140,7 @@ defmodule NervesHubUserAPI.API do
 
     IO.write(
       :stderr,
-      "\r|#{String.duplicate("=", completed)}#{String.duplicate(" ", unfilled)}| #{percent}% (#{
-        bytes_to_mb(size)
-      } / #{bytes_to_mb(max)}) MB"
+      "\r|#{String.duplicate("=", completed)}#{String.duplicate(" ", unfilled)}| #{percent}% (#{bytes_to_mb(size)} / #{bytes_to_mb(max)}) MB"
     )
   end
 

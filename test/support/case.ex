@@ -30,6 +30,28 @@ defmodule NervesHubCoreTest.Case do
   def create_user(context) do
     user = Fixtures.user()
 
+    note = :crypto.strong_rand_bytes(16) |> Base.encode16()
+
+    {:ok, %{"data" => %{"token" => token}}} =
+      NervesHubUserAPI.User.login(Fixtures.user_email(), Fixtures.user_password(), note)
+
+    recycle_pool()
+
+    auth = NervesHubUserAPI.Auth.new(token: token)
+    {:ok, Map.merge(context, %{user: user, auth: auth})}
+  end
+
+  def create_user_no_auth(context) do
+    user = Fixtures.user()
+
+    recycle_pool()
+
+    {:ok, Map.merge(context, %{user: user})}
+  end
+
+  def create_peer_user(context) do
+    user = Fixtures.user()
+
     key = X509.PrivateKey.new_ec(:secp256r1)
     csr = X509.CSR.new(key, "/O=#{Fixtures.user_name()}")
     csr_pem = X509.CSR.to_pem(csr)
