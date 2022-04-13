@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.9.0
+
+This releases shifts preferance to token authentication rather than the user
+client certificate that was being used. This changes is backwards compatible
+and you can continue to use certificates, but a warning will be emmitted.
+See [nerves-hub/nerves_hub_web#818](https://github.com/nerves-hub/nerves_hub_web/pull/818)
+for more details.
+
+* New features
+  * Added `:token` to `%NervesHubUserAPI.Auth{}` struct for token based authentication
+  * `NervesHubUserAPI.User.login/3` to authenticate and create a token for later use
+
 ## 0.8.0
 
 * Breaking Changes
