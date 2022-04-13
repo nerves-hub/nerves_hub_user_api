@@ -45,6 +45,27 @@ defmodule NervesHubUserAPI.User do
   end
 
   @doc """
+  Validate authentication of a user and create an access token for future use
+
+  Verb: POST
+  Path: /users/login
+
+  A `note` is required for the generated token. Defaults to the client
+  hostname if not supplied.
+  """
+  @spec login(String.t(), String.t()) :: {:error, any()} | {:ok, any()}
+  def login(email, password, note \\ nil) do
+    note = note || get_hostname()
+    params = %{email: email, password: password, note: note}
+    API.request(:post, "users/login", params)
+  end
+
+  defp get_hostname() do
+    {:ok, hostname} = :inet.gethostname()
+    to_string(hostname)
+  end
+
+  @doc """
   Sign a user certificate for an existing user.
 
   Verb: POST
