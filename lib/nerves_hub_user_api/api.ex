@@ -97,7 +97,8 @@ defmodule NervesHubUserAPI.API do
       [
         verify: :verify_peer,
         server_name_indication: server_name_indication(),
-        cacerts: ca_certs()
+        cacerts: ca_certs(),
+        customize_hostname_check: [match_fun: :public_key.pkix_verify_hostname_match_fun(:https)]
       ] ++ peer_options(auth)
 
     [
