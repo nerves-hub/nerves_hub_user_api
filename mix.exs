@@ -45,7 +45,10 @@ defmodule NervesHubUserAPI.MixProject do
   end
 
   defp dialyzer do
-    [ignore_warnings: "dialyzer.ignore-warnings"]
+    [
+      flags: [:missing_return, :extra_return, :unmatched_returns, :error_handling, :underspecs],
+      ignore_warnings: "dialyzer.ignore-warnings"
+    ]
   end
 
   defp docs do
@@ -77,7 +80,7 @@ defmodule NervesHubUserAPI.MixProject do
       {:x509, "~> 0.3"},
       {:nerves_hub_ca_store, "~> 1.0.0"},
       {:ex_doc, "~> 0.23", only: [:docs], runtime: false},
-      {:dialyxir, "1.1.0", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.2", only: [:dev, :test], runtime: false},
 
       # test deps for integration test w/ nerves_hub_web
       {:phoenix, "~> 1.4", only: :test, override: true},
