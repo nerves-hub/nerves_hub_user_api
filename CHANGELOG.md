@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.1
+
+* Bug fixes
+  * Enable HTTPS semantics for X.509 certificate validation. This fixes an issue
+    where wildcard certificates were being incorrectly reported as invalid.
+    Thanks to @doawoo for this fix.
+
 ## 0.9.0
 
 This releases shifts preferance to token authentication rather than the user
