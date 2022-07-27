@@ -2,9 +2,8 @@ version: 2
 jobs:
   build:
     docker:
-      - image: hexpm/elixir:1.13.4-erlang-24.3.3-alpine-3.14.5
+      - image: hexpm/elixir:1.13.4-erlang-25.0.2-alpine-3.16.0
         environment:
-          MIX_ENV: test
           DATABASE_URL: postgres://db:db@localhost:5432/db
           DOCKERIZE_VERSION: v0.6.1
       - image: circleci/postgres:10.1-alpine
@@ -35,9 +34,9 @@ jobs:
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run: mix test
       - run: mix format --check-formatted
-      - run: MIX_ENV=docs mix docs
-      - run: MIX_ENV=docs mix hex.build
-      - run: MIX_ENV=dev mix dialyzer --halt-exit-status
+      - run: mix docs
+      - run: mix hex.build
+      - run: mix dialyzer
       - save_cache:
           key: v1-mix-cache-{{ checksum "mix.lock" }}
           paths:
