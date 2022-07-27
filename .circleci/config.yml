@@ -6,7 +6,7 @@ jobs:
         environment:
           DATABASE_URL: postgres://db:db@localhost:5432/db
           DOCKERIZE_VERSION: v0.6.1
-      - image: circleci/postgres:10.1-alpine
+      - image: circleci/postgres:13.5-ram
         environment:
           POSTGRES_USER: db
           POSTGRES_DB: db
