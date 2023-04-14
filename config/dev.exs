@@ -3,4 +3,4 @@ import Config
 config :nerves_hub_user_api,
   scheme: "http",
   host: "localhost",
-  port: 4002
+  port: 4000
