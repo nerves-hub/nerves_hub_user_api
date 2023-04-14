@@ -1,5 +1,6 @@
 import Config
 
 config :nerves_hub_user_api,
-  host: "0.0.0.0",
+  scheme: "http",
+  host: "localhost",
   port: 4002
