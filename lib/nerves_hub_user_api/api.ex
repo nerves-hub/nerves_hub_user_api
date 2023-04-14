@@ -21,7 +21,7 @@ defmodule NervesHubUserAPI.API do
     host = System.get_env("NERVES_HUB_HOST") || opts[:host]
     port = get_env_as_integer("NERVES_HUB_PORT") || opts[:port]
 
-    %URI{scheme: scheme, host: host, port: port, path: "/"} |> URI.to_string()
+    %URI{scheme: scheme, host: host, port: port, path: "/api"} |> URI.to_string()
   end
 
   def request(:get, path, params) when is_map(params) do
