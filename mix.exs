@@ -78,16 +78,8 @@ defmodule NervesHubUserAPI.MixProject do
       {:tesla, "~> 1.2.1 or ~> 1.3"},
       {:hackney, "~> 1.9"},
       {:x509, "~> 0.3"},
-      {:nerves_hub_ca_store, "~> 1.0.0"},
       {:ex_doc, "~> 0.23", only: [:docs], runtime: false},
       {:dialyxir, "~> 1.2", only: [:dev, :test], runtime: false},
-
-      # test deps for integration test w/ nerves_hub_web
-      {:phoenix, "~> 1.4", only: :test, override: true},
-      {:nerves_hub_web,
-       github: "nerves-hub/nerves_hub_web", branch: "main", only: :test, runtime: false},
-      {:nerves_hub_ca,
-       github: "nerves-hub/nerves_hub_ca", branch: "main", only: :test, runtime: false}
     ]
   end
 end

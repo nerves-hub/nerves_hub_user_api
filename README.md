@@ -45,4 +45,4 @@ following keys:
 * `host` - NervesHub API endpoint address (defaults to `api.nerves-hub.org`)
 * `port` - NervesHub API endpoint port (defaults to 443)
 * `ca_store` - A module that exposes a single function `ca_certs` that returns
-  certs as a list of DER encoded binaries. (Defaults to [`NervesHubCAStore`](https://github.com/nerves-hub/nerves_hub_ca_store))
+  certs as a list of DER encoded binaries.
