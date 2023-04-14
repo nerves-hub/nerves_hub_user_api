@@ -31,8 +31,8 @@ The docs can be found at [HexDocs](https://hexdocs.pm/nerves_hub_user_api).
 automation. Environment variables take precedence over configuration. The
 following variables are available:
 
-* `NERVES_HUB_HOST` - NervesHub API endpoint IP address or hostname (defaults to
-  `api.nerves-hub.org`)
+* `NERVES_HUB_SCHEME` - NervesHub API endpoint scheme (defaults to https)
+* `NERVES_HUB_HOST` - NervesHub API endpoint IP address or hostname
 * `NERVES_HUB_PORT` - NervesHub API endpoint port (defaults to 443)
 * `NERVES_LOG_DISABLE_PROGRESS_BAR` - Set to disable the progress bar on file
   transfers
