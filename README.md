@@ -42,7 +42,8 @@ following variables are available:
 `NervesHubUserAPI` may also be configured in the `config.exs`. It supports the
 following keys:
 
-* `host` - NervesHub API endpoint address (defaults to `api.nerves-hub.org`)
+* `scheme` NervesHub API endpoint scheme (defaults to `https`)
+* `host` - NervesHub API endpoint address
 * `port` - NervesHub API endpoint port (defaults to 443)
 * `ca_store` - A module that exposes a single function `ca_certs` that returns
   certs as a list of DER encoded binaries.
