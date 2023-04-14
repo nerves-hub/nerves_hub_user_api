@@ -71,7 +71,7 @@ defmodule NervesHubUserAPI.MixProject do
       {:hackney, "~> 1.9"},
       {:x509, "~> 0.3"},
       {:ex_doc, "~> 0.23", only: [:docs], runtime: false},
-      {:dialyxir, "~> 1.2", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.2", only: [:dev, :test], runtime: false}
     ]
   end
 end
