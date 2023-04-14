@@ -27,18 +27,10 @@ defmodule NervesHubUserAPI.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      env: [host: "api.nerves-hub.org", port: 443],
-      extra_applications: [:logger] ++ extra_applications(Mix.env())
+      env: [scheme: "https", port: 443],
+      extra_applications: [:logger]
     ]
   end
-
-  def extra_applications(:test),
-    do: [
-      :phoenix,
-      :ecto_sql
-    ]
-
-  def extra_applications(_), do: []
 
   defp description do
     "NervesHub Management API client"
