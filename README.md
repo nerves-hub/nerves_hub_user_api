@@ -3,6 +3,12 @@
 [![CircleCI](https://circleci.com/gh/nerves-hub/nerves_hub_user_api.svg?style=svg)](https://circleci.com/gh/nerves-hub/nerves_hub_user_api)
 [![Hex version](https://img.shields.io/hexpm/v/nerves_hub_user_api.svg "Hex version")](https://hex.pm/packages/nerves_hub_user_api)
 
+**Important**
+
+This is for the `maint-v1.0` version of NervesHub. It has been merged into [NervesHubCLI](https://github.com/nerves-hub/nerves_hub_cli) going forward.
+
+---
+
 This is a library for interacting with a NervesHub website programmatically.
 See [NervesHubCLI](https://github.com/nerves-hub/nerves_hub_cli) for using it
 with `mix`.
